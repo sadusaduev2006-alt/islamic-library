@@ -1,65 +1,12 @@
 // ========================================
-// ДАННЫЕ КНИГ
+// ДАННЫЕ КНИГ (категории)
 // ========================================
 const library = {
-    // ========================================
-    // ВСЕ КНИГИ (общий список)
-    // ========================================
-    all: {
-        title: '📚 Все книги',
-        books: [
-            // Вероубеждение
-            {
-                name: 'Основы веры',
-                author: 'Проф. Салих ас-Сухейми, Проф. Абд ар-Раззак аль-Бадр, Проф. Ибрахим ар-Рухейли',
-                desc: 'Издательство ummah. Под редакцией Факихи А.Н., А. аль-Гамиди. Перевод Кулиева Э.Р.',
-                file: 'books/aqeedah/Основы веры.pdf'
-            },
-            {
-                name: 'Слово единобожия',
-                author: "'Абд ар-Раззак ибн 'Абд аль-Мухсин аль-Бадр",
-                desc: 'Издательство ummah. Книга о таухиде и искренности в поклонении Аллаху',
-                file: 'books/aqeedah/Слово единобожия.pdf'
-            },
-            {
-                name: 'Единобожие',
-                author: 'Издательство ummah',
-                desc: 'Издательство ummah. Книга о единобожии и его основах',
-                file: 'books/aqeedah/Единобожие.pdf'
-            },
-            {
-                name: 'Судьба и предопределение',
-                author: 'Умар бин Сулайман аль-Ашкар',
-                desc: 'Издательство ummah. Книга о вере в предопределение Аллаха',
-                file: 'books/aqeedah/Судьба и предопределение.pdf'
-            },
-            // Сира
-            {
-                name: 'Жизнеописание Пророка Мухаммада',
-                author: 'Издательство ummah',
-                desc: 'Издательство ummah. Достоверная биография Пророка (ﷺ) от рождения до смерти',
-                file: 'books/sira/Жизнеописание Пророка Мухаммада.pdf'
-            },
-            // Адабы и воспитание
-            {
-                name: 'Недуги сердца',
-                author: 'Мухаммад Салих аль-Мунаджид',
-                desc: 'Издательство ummah. О болезнях сердца и путях их исцеления',
-                file: 'books/adab/Недуги сердца.pdf'
-            },
-            {
-                name: 'Некоторые проблемы современной молодежи и их способы решения',
-                author: 'Мухаммад ибн Салих аль-Усаймин',
-                desc: 'Издательство ummah. Наставления для молодёжи',
-                file: 'books/adab/Некоторые проблемы современной молодежи.pdf'
-            }
-        ]
-    },
-    // ========================================
-    // ВЕРОУБЕЖДЕНИЕ (Акыда)
-    // ========================================
     aqeedah: {
+        id: 'aqeedah',
         title: '📖 Вероубеждение',
+        icon: '📖',
+        desc: 'Книги по основам веры, таухиду и предопределению',
         books: [
             {
                 name: 'Основы веры',
@@ -87,11 +34,11 @@ const library = {
             }
         ]
     },
-    // ========================================
-    // СИРА (жизнь Пророка ﷺ)
-    // ========================================
     sira: {
+        id: 'sira',
         title: '📖 Сира',
+        icon: '📖',
+        desc: 'Книги о жизни Пророка Мухаммада (ﷺ)',
         books: [
             {
                 name: 'Жизнеописание Пророка Мухаммада',
@@ -101,11 +48,11 @@ const library = {
             }
         ]
     },
-    // ========================================
-    // АДАБЫ И ВОСПИТАНИЕ
-    // ========================================
     adab: {
+        id: 'adab',
         title: '📖 Адабы и воспитание',
+        icon: '📖',
+        desc: 'Книги о воспитании души, адабах и наставлениях',
         books: [
             {
                 name: 'Недуги сердца',
@@ -246,7 +193,7 @@ function showCatalog() {
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'none';
     document.getElementById('pdfViewer').style.display = 'none';
-    renderCatalog('all');
+    renderCatalogCategories();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -273,28 +220,50 @@ function showProphets() {
 // ========================================
 // КАТАЛОГ КНИГ
 // ========================================
-function renderCatalog(tab) {
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelector(`.tab-btn[onclick*="${tab}"]`)?.classList.add('active');
+function renderCatalogCategories() {
+    let html = `
+        <div class="catalog-categories-grid">
+    `;
+    
+    for (const [key, category] of Object.entries(library)) {
+        const bookCount = category.books ? category.books.length : 0;
+        html += `
+            <div class="category-card" onclick="renderCategoryBooks('${key}')">
+                <div class="category-icon">${category.icon || '📖'}</div>
+                <div class="category-title">${category.title}</div>
+                <div class="category-desc">${category.desc || ''}</div>
+                <div class="category-count">📚 ${bookCount} книг</div>
+            </div>
+        `;
+    }
+    
+    html += '</div>';
+    catalogContent.innerHTML = html;
+}
 
-    const data = library[tab];
-    if (!data) return;
+function renderCategoryBooks(categoryKey) {
+    const category = library[categoryKey];
+    if (!category) return;
 
     let html = `
-        <h3 style="font-size: 18px; color: var(--green); margin-bottom: 12px;">${data.title}</h3>
+        <div class="category-books-header">
+            <button class="back-btn" onclick="renderCatalogCategories()">← Назад к категориям</button>
+            <h3 class="category-books-title">${category.title}</h3>
+            <p class="category-books-desc">${category.desc || ''}</p>
+        </div>
         <div class="books-list">
     `;
 
-    if (data.books.length === 0) {
+    if (category.books.length === 0) {
         html += `
             <div class="empty-message">
                 <span class="empty-icon">📭</span>
-                В этом разделе пока нет книг.<br>
+                В этой категории пока нет книг.<br>
                 <span style="font-size: 13px; color: var(--text-muted);">Книги будут добавлены позже, иншаАллах.</span>
             </div>
         `;
     } else {
-        data.books.forEach((book) => {
+        category.books.forEach((book) => {
             html += `
                 <div class="book-card" style="cursor: pointer;" onclick="openPdfViewer('${book.file}')">
                     <div>
@@ -311,10 +280,6 @@ function renderCatalog(tab) {
 
     html += '</div>';
     catalogContent.innerHTML = html;
-}
-
-function switchCatalogTab(tab, btn) {
-    renderCatalog(tab);
 }
 
 // ========================================
