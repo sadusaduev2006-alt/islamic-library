@@ -174,7 +174,6 @@ function showProphets() {
     catalogSection.style.display = 'none';
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'block';
-    currentProphetTab = 'videos';
     renderProphets('videos');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -288,14 +287,11 @@ function openTelegram(url) {
 // ========================================
 // ИСТОРИИ ПРОРОКОВ
 // ========================================
-let currentProphetTab = 'videos';
-
 function renderProphets(tab) {
     const container = document.getElementById('prophetsContent');
     if (!container) return;
 
     // Обновляем активную вкладку
-    currentProphetTab = tab;
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelector(`.tab-btn[onclick*="${tab}"]`)?.classList.add('active');
 
