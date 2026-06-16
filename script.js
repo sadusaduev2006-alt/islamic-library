@@ -35,10 +35,10 @@ const audioData = {
             desc: 'Известный чтец Корана, имам мечети',
             icon: '🎙️',
             audios: [
-                { name: '001 Аль-Фатиха', file: 'audio/luhayd/001_al_fatiha.mp3' }
+                { name: '001 Аль-Фатиха', file: 'audio/luhayd/001_al_fatiha.mp3' },
+                { name: '002 Аль-Бакара', file: 'audio/luhayd/002_al_bakara.mp3' }
             ]
         }
-        // Добавляйте новых чтецов сюда
     ]
 };
 
