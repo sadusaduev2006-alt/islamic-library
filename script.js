@@ -35,21 +35,21 @@ const audioData = {
             desc: 'Известный чтец Корана из Саудовской Аравии',
             icon: '🎙️',
             telegram: 'https://t.me/audiooo_quran',
-            count: 'более 114 аудио'
+            count: 'более 50 аудио'
         },
         {
             name: 'Мишари ибн Рашид аль-Афаси',
             desc: 'Всемирно известный чтец Корана',
             icon: '🎙️',
             telegram: 'https://t.me/audiooo_quran',
-            count: 'более 114 аудио'
+            count: 'более 80 аудио'
         },
         {
             name: 'Мухаммад аль-Люхайдан',
             desc: 'Известный чтец Корана, имам мечети',
             icon: '🎙️',
             telegram: 'https://t.me/audiooo_quran',
-            count: 'более 114 аудио'
+            count: 'более 30 аудио'
         }
     ]
 };
@@ -63,16 +63,49 @@ const prophetsData = [
         title: 'История Пророков #1: Как Аллах создал Всё - От Трона до сотворения Адама',
         desc: 'Шейх Набиль аль-Авады рассказывает о сотворении мира, Трона Аллаха и создании Адама (мир ему)',
         embed: 'https://www.youtube.com/embed/cy00RraxA10',
-        duration: '45:20'
+        duration: '45:20',
+        youtube: 'https://www.youtube.com/watch?v=cy00RraxA10'
+    },
+    {
+        id: 2,
+        title: 'История Пророков #2: Создание Адама и восстание Иблиса',
+        desc: 'Шейх Набиль аль-Авады о создании Адама, повелении поклониться ему и гордыне Иблиса',
+        embed: 'https://www.youtube.com/embed/qigig56Rvnw',
+        duration: '38:15',
+        youtube: 'https://www.youtube.com/watch?v=qigig56Rvnw'
+    },
+    {
+        id: 3,
+        title: 'История Пророков #3: Адам и Ева (Хавва) - Первое Ослушание и Изгнание из Рая',
+        desc: 'Шейх Набиль аль-Авады о создании Хаввы, искушении и изгнании из Рая',
+        embed: 'https://www.youtube.com/embed/iERo1VRhG-k',
+        duration: '42:10',
+        youtube: 'https://www.youtube.com/watch?v=iERo1VRhG-k'
+    },
+    {
+        id: 4,
+        title: 'История Пророков #4: Каин и Авель - Первое убийство в истории',
+        desc: 'Шейх Набиль аль-Авады о сыновьях Адама, ревности и первом убийстве на земле',
+        embed: 'https://www.youtube.com/embed/lFkMy3X6Ysg',
+        duration: '36:45',
+        youtube: 'https://www.youtube.com/watch?v=lFkMy3X6Ysg'
+    },
+    {
+        id: 5,
+        title: 'История Пророков #5: Как Ной 950 Лет Спасал Человечество',
+        desc: 'Шейх Набиль аль-Авады о пророке Нухе (мир ему), его долгой проповеди и терпении',
+        embed: 'https://www.youtube.com/embed/bhvv-iF_Q14',
+        duration: '48:30',
+        youtube: 'https://www.youtube.com/watch?v=bhvv-iF_Q14'
+    },
+    {
+        id: 6,
+        title: 'История Пророков #6: Ноев Ковчег и Всемирный Потоп',
+        desc: 'Шейх Набиль аль-Авады о строительстве ковчега, потопе и спасении верующих',
+        embed: 'https://www.youtube.com/embed/AW-1t59h8OM',
+        duration: '52:20',
+        youtube: 'https://www.youtube.com/watch?v=AW-1t59h8OM'
     }
-    // Добавляйте новые видео сюда:
-    // {
-    //     id: 2,
-    //     title: 'Название видео',
-    //     desc: 'Описание видео',
-    //     embed: 'https://www.youtube.com/embed/ID_ВИДЕО',
-    //     duration: '30:00'
-    // }
 ];
 
 // ========================================
@@ -262,6 +295,7 @@ function renderProphets() {
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowfullscreen>
                     </iframe>
+                    <a href="${prophet.youtube}" target="_blank" class="youtube-link-btn">▶ Смотреть на YouTube</a>
                 </div>
                 <div class="prophet-info">
                     <h3 class="prophet-title">${prophet.title}</h3>
