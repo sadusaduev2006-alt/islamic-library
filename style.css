@@ -808,3 +808,139 @@ body {
     }
     .tab-btn { font-size: 12px; padding: 6px 10px; }
 }
+/* ========================================
+   КАРТОЧКИ КАТЕГОРИЙ
+   ======================================== */
+.catalog-categories-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.category-card {
+    background: var(--white);
+    border: 2px solid rgba(26, 90, 58, 0.06);
+    border-radius: var(--radius-sm);
+    padding: 20px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--gold);
+    background: var(--gold-soft);
+}
+
+.category-card:active {
+    transform: scale(0.97);
+}
+
+.category-icon {
+    font-size: 36px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.category-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--green);
+    display: block;
+}
+
+.category-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    line-height: 1.4;
+}
+
+.category-count {
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 600;
+    margin-top: 8px;
+    display: inline-block;
+    background: rgba(201, 168, 76, 0.1);
+    padding: 2px 14px;
+    border-radius: 50px;
+}
+
+/* ========================================
+   ЗАГОЛОВОК КАТЕГОРИИ С КНИГАМИ
+   ======================================== */
+.category-books-header {
+    margin-bottom: 16px;
+}
+
+.category-books-header .back-btn {
+    margin-bottom: 8px;
+}
+
+.category-books-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--green);
+    margin: 4px 0;
+}
+
+.category-books-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* ========================================
+   АДАПТАЦИЯ
+   ======================================== */
+@media (max-width: 700px) {
+    .catalog-categories-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .catalog-categories-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    .category-card {
+        padding: 14px 10px;
+    }
+    .category-icon {
+        font-size: 28px;
+    }
+    .category-title {
+        font-size: 14px;
+    }
+    .category-desc {
+        font-size: 11px;
+    }
+    .category-count {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 360px) {
+    .catalog-categories-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    .category-card {
+        padding: 10px 8px;
+    }
+    .category-icon {
+        font-size: 22px;
+    }
+    .category-title {
+        font-size: 12px;
+    }
+    .category-desc {
+        display: none;
+    }
+}
