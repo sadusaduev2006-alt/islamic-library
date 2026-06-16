@@ -1,4 +1,9 @@
 // ========================================
+// НАСТРОЙКА ДЛЯ GOOGLE SHEETS
+// ========================================
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxTaRJ4ZyRcViohXdaSvunQWGPkVrlttmRFzz4CIsF28rfjc5RGG0mTkTfQaT5r53jM/exec';
+
+// ========================================
 // ДАННЫЕ КНИГ (категории)
 // ========================================
 const library = {
@@ -467,6 +472,68 @@ function showSection(name) {
 }
 
 // ========================================
+// ПРИВЕТСТВЕННОЕ ОКНО С ИМЕНЕМ
+// ========================================
+function showNameModal() {
+    const modal = document.getElementById('nameModal');
+    if (!modal) return;
+    const savedName = localStorage.getItem('userName');
+    if (!savedName) {
+        modal.style.display = 'flex';
+        document.getElementById('userNameInput').focus();
+    } else {
+        showWelcomeToast(savedName);
+    }
+}
+
+function saveUserName() {
+    const input = document.getElementById('userNameInput');
+    const name = input.value.trim();
+    if (!name) {
+        showToast('⚠️ Пожалуйста, введите ваше имя');
+        return;
+    }
+    if (name.length < 2) {
+        showToast('⚠️ Имя должно содержать минимум 2 буквы');
+        return;
+    }
+    
+    // Сохраняем в localStorage
+    localStorage.setItem('userName', name);
+    document.getElementById('nameModal').style.display = 'none';
+    showWelcomeToast(name);
+    
+    // Отправляем в Google Sheets
+    sendNameToGoogleSheets(name);
+}
+
+function showWelcomeToast(name) {
+    showToast(`🌙 Ас-саляму алейкум, ${name}! Мы рады видеть вас на нашем сайте 🤲`);
+}
+
+// ========================================
+// ОТПРАВКА ИМЕНИ В GOOGLE SHEETS
+// ========================================
+function sendNameToGoogleSheets(name) {
+    fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: name
+        })
+    })
+    .then(() => {
+        console.log('✅ Имя отправлено в Google Sheets');
+    })
+    .catch(error => {
+        console.log('❌ Ошибка отправки:', error);
+    });
+}
+
+// ========================================
 // TOAST
 // ========================================
 let toastTimeout;
@@ -491,4 +558,8 @@ function showToast(msg) {
 // ========================================
 // ЗАГРУЗКА
 // ========================================
-document.addEventListener('DOMContentLoaded', showMainMenu);
+document.addEventListener('DOMContentLoaded', function() {
+    showMainMenu();
+    // Показываем окно с именем через 0.6 секунды
+    setTimeout(showNameModal, 600);
+});
