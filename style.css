@@ -363,6 +363,7 @@ body {
    ======================================== */
 .tabs {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 16px;
     border-bottom: 2px solid rgba(201, 168, 76, 0.1);
@@ -402,51 +403,6 @@ body {
     height: 3px;
     background: var(--gold);
     border-radius: 3px;
-}
-
-/* ========================================
-   КАТАЛОГ КНИГ
-   ======================================== */
-.catalog-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 14px;
-}
-
-.catalog-cat-btn {
-    background: var(--white);
-    border: 2px solid rgba(26, 90, 58, 0.04);
-    border-radius: var(--radius-sm);
-    padding: 14px 10px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    text-align: center;
-    font-family: inherit;
-    box-shadow: var(--shadow);
-}
-
-.catalog-cat-btn:hover {
-    transform: translateY(-2px);
-    border-color: var(--gold);
-    box-shadow: var(--shadow-hover);
-    background: var(--gold-soft);
-}
-
-.catalog-cat-btn .cat-icon {
-    font-size: 26px;
-    display: block;
-}
-.catalog-cat-btn .cat-name {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--green);
-    display: block;
-}
-.catalog-cat-btn .cat-desc {
-    font-size: 11px;
-    color: var(--text-muted);
-    display: block;
 }
 
 /* ========================================
@@ -777,7 +733,6 @@ body {
     .arabic-line.bismillah { font-size: 18px; }
     .shahada-arabic { font-size: 15px; }
     .shahada-russian { font-size: 12px; }
-    .catalog-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
     .book-card { flex-direction: column; align-items: stretch; gap: 6px; }
     .download-btn { width: 100%; margin-left: 0; text-align: center; padding: 8px; }
     .section-title { font-size: 17px; }
