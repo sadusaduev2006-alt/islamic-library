@@ -34,21 +34,21 @@ const audioData = {
             name: 'Абу Бакр аш-Шатри',
             desc: 'Известный чтец Корана из Саудовской Аравии',
             icon: '🎙️',
-            telegram: 'https://t.me/c/4404097272/233',
+            telegram: 'https://t.me/audiooo_quran/233/235',
             count: 'более 114 аудио'
         },
         {
             name: 'Мишари ибн Рашид аль-Афаси',
             desc: 'Всемирно известный чтец Корана',
             icon: '🎙️',
-            telegram: 'https://t.me/c/4404097272/117',
+            telegram: 'https://t.me/audiooo_quran/117/119',
             count: 'более 114 аудио'
         },
         {
             name: 'Мухаммад аль-Люхайдан',
             desc: 'Известный чтец Корана, имам мечети',
             icon: '🎙️',
-            telegram: 'https://t.me/c/4404097272/2',
+            telegram: 'https://t.me/audiooo_quran/2/3',
             count: 'более 114 аудио'
         }
     ]
