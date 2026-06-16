@@ -1,6 +1,3 @@
-// ========================================
-// ДАННЫЕ КНИГ
-// ========================================
 const library = {
     'akyda': {
         title: '📖 Акыда',
@@ -29,10 +26,19 @@ const library = {
 };
 
 // ========================================
-// ДАННЫЕ АУДИО
+// ДАННЫЕ АУДИО (ЧТЕЦЫ)
 // ========================================
 const audioData = {
-    reciters: []
+    reciters: [
+        {
+            name: 'Мухаммад аль-Люхайд',
+            desc: 'Известный чтец Корана, имам мечети',
+            icon: '🎙️',
+            audios: [
+                { name: '001 Аль-Фатиха', file: 'audio/luhayd/001_al_fatiha.mp3' }
+            ]
+        }
+    ]
 };
 
 // ========================================
@@ -219,9 +225,6 @@ function downloadAudio(file, name) {
     }
 }
 
-// ========================================
-// УНИВЕРСАЛЬНАЯ ФУНКЦИЯ ДЛЯ НОВЫХ РАЗДЕЛОВ
-// ========================================
 function showSection(name) {
     showToast(`📂 Раздел "${name}" будет доступен позже, иншаАллах!`);
 }
@@ -252,45 +255,3 @@ function showToast(msg) {
 // ЗАГРУЗКА
 // ========================================
 document.addEventListener('DOMContentLoaded', showMainMenu);
-
-// ========================================
-// ПРИМЕРЫ ЗАПОЛНЕНИЯ (раскомментируйте для добавления книг и аудио)
-// ========================================
-/*
-library['akyda'].books = [
-    { name: 'Три основы', author: 'Мухаммад ибн Абдуль-Ваххаб', file: 'books/akyda/tri_osnovy.pdf' },
-    { name: 'Китаб ат-Таухид', author: 'Мухаммад ибн Абдуль-Ваххаб', file: 'books/akyda/kitab_at_tauhid.pdf' }
-];
-
-library['tafsir'].books = [
-    { name: 'Тафсир Ибн Касир (краткий)', author: 'Ибн Касир', file: 'books/tafsir/ibn_kasir.pdf' }
-];
-
-library['fikh'].books = [
-    { name: 'Книга очищения и намаза', author: 'Салих аль-Фаузан', file: 'books/fikh/fikh_namaz.pdf' }
-];
-
-library['sira'].books = [
-    { name: 'Жизнь Пророка (краткая)', author: 'Мухаммад Салих', file: 'books/sira/sira_kratkaya.pdf' }
-];
-
-audioData.reciters = [
-    {
-        name: 'Мишари Рашид аль-Афаси',
-        desc: 'Известный чтец Корана',
-        icon: '🎙️',
-        audios: [
-            { name: 'Сура Аль-Фатиха', file: 'audio/mishari/fatiha.mp3' },
-            { name: 'Сура Аль-Ихлас', file: 'audio/mishari/ihlas.mp3' }
-        ]
-    },
-    {
-        name: 'Абдуррахман ас-Судайс',
-        desc: 'Имам Масджид аль-Харам',
-        icon: '🎙️',
-        audios: [
-            { name: 'Сура Ясин', file: 'audio/sudais/yasin.mp3' }
-        ]
-    }
-];
-*/
