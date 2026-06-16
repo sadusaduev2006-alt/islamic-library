@@ -1,161 +1,415 @@
-<!DOCTYPE html>
-<html lang="ru" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Исламская библиотека</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+const library = {
+    'akyda': {
+        title: '📖 Акыда',
+        desc: 'основы вероубеждения',
+        icon: '📖',
+        books: []
+    },
+    'tafsir': {
+        title: '📖 Тафсир',
+        desc: 'толкование Корана',
+        icon: '📖',
+        books: []
+    },
+    'fikh': {
+        title: '📖 Фикх',
+        desc: 'практические предписания',
+        icon: '📖',
+        books: []
+    },
+    'sira': {
+        title: '📖 Сира',
+        desc: 'жизнь Пророка (ﷺ)',
+        icon: '📖',
+        books: []
+    }
+};
 
-    <div class="container">
-        
-        <!-- ===== АРАБСКИЕ ФРАЗЫ ===== -->
-        <div class="arabic-top">
-            <div class="arabic-line">أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ</div>
-            <div class="arabic-line bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+// ========================================
+// ДАННЫЕ АУДИО (ЧТЕЦЫ)
+// ========================================
+const audioData = {
+    reciters: [
+        {
+            name: 'Абу Бакр аш-Шатри',
+            desc: 'Известный чтец Корана из Саудовской Аравии',
+            icon: '🎙️',
+            telegram: 'https://t.me/audiooo_quran',
+            count: 'более 50 аудио'
+        },
+        {
+            name: 'Мишари ибн Рашид аль-Афаси',
+            desc: 'Всемирно известный чтец Корана',
+            icon: '🎙️',
+            telegram: 'https://t.me/audiooo_quran',
+            count: 'более 80 аудио'
+        },
+        {
+            name: 'Мухаммад аль-Люхайдан',
+            desc: 'Известный чтец Корана, имам мечети',
+            icon: '🎙️',
+            telegram: 'https://t.me/audiooo_quran',
+            count: 'более 30 аудио'
+        }
+    ]
+};
+
+// ========================================
+// ДАННЫЕ ВИДЕО (ИСТОРИИ ПРОРОКОВ)
+// ========================================
+const prophetsVideos = [
+    {
+        id: 1,
+        title: 'История Пророков #1: Как Аллах создал Всё - От Трона до сотворения Адама',
+        desc: 'Шейх Набиль аль-Авады рассказывает о сотворении мира, Трона Аллаха и создании Адама (мир ему)',
+        embed: 'https://www.youtube.com/embed/cy00RraxA10',
+        duration: '45:20',
+        youtube: 'https://www.youtube.com/watch?v=cy00RraxA10'
+    },
+    {
+        id: 2,
+        title: 'История Пророков #2: Создание Адама и восстание Иблиса',
+        desc: 'Шейх Набиль аль-Авады о создании Адама, повелении поклониться ему и гордыне Иблиса',
+        embed: 'https://www.youtube.com/embed/qigig56Rvnw',
+        duration: '38:15',
+        youtube: 'https://www.youtube.com/watch?v=qigig56Rvnw'
+    },
+    {
+        id: 3,
+        title: 'История Пророков #3: Адам и Ева (Хавва) - Первое Ослушание и Изгнание из Рая',
+        desc: 'Шейх Набиль аль-Авады о создании Хаввы, искушении и изгнании из Рая',
+        embed: 'https://www.youtube.com/embed/iERo1VRhG-k',
+        duration: '42:10',
+        youtube: 'https://www.youtube.com/watch?v=iERo1VRhG-k'
+    },
+    {
+        id: 4,
+        title: 'История Пророков #4: Каин и Авель - Первое убийство в истории',
+        desc: 'Шейх Набиль аль-Авады о сыновьях Адама, ревности и первом убийстве на земле',
+        embed: 'https://www.youtube.com/embed/lFkMy3X6Ysg',
+        duration: '36:45',
+        youtube: 'https://www.youtube.com/watch?v=lFkMy3X6Ysg'
+    },
+    {
+        id: 5,
+        title: 'История Пророков #5: Как Ной 950 Лет Спасал Человечество',
+        desc: 'Шейх Набиль аль-Авады о пророке Нухе (мир ему), его долгой проповеди и терпении',
+        embed: 'https://www.youtube.com/embed/bhvv-iF_Q14',
+        duration: '48:30',
+        youtube: 'https://www.youtube.com/watch?v=bhvv-iF_Q14'
+    },
+    {
+        id: 6,
+        title: 'История Пророков #6: Ноев Ковчег и Всемирный Потоп',
+        desc: 'Шейх Набиль аль-Авады о строительстве ковчега, потопе и спасении верующих',
+        embed: 'https://www.youtube.com/embed/AW-1t59h8OM',
+        duration: '52:20',
+        youtube: 'https://www.youtube.com/watch?v=AW-1t59h8OM'
+    }
+];
+
+// ========================================
+// ДАННЫЕ КНИГ (ИСТОРИИ ПРОРОКОВ)
+// ========================================
+const prophetsBooks = [
+    {
+        id: 1,
+        title: 'Истории пророков (Книга)',
+        author: 'Ибн Касир',
+        desc: 'Полное собрание историй всех пророков от Адама до Мухаммада (ﷺ)',
+        file: 'books/prophets/istorii_prorokov_ibn_kasir.pdf'
+    },
+    {
+        id: 2,
+        title: 'Жизнь пророков',
+        author: 'Шейх Набиль аль-Авады',
+        desc: 'Книга на основе лекций шейха Набиля аль-Авады',
+        file: 'books/prophets/zhizn_prorokov.pdf'
+    }
+];
+
+// ========================================
+// DOM-ЭЛЕМЕНТЫ
+// ========================================
+const mainMenu = document.getElementById('mainMenu');
+const catalogSection = document.getElementById('catalogSection');
+const audioSection = document.getElementById('audioSection');
+const catalogCategories = document.getElementById('catalogCategories');
+const booksListContainer = document.getElementById('booksListContainer');
+const audioContent = document.getElementById('audioContent');
+
+// ========================================
+// НАВИГАЦИЯ
+// ========================================
+function showMainMenu() {
+    mainMenu.style.display = 'block';
+    catalogSection.style.display = 'none';
+    audioSection.style.display = 'none';
+    document.getElementById('prophetsSection').style.display = 'none';
+    booksListContainer.innerHTML = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showCatalog() {
+    mainMenu.style.display = 'none';
+    catalogSection.style.display = 'block';
+    audioSection.style.display = 'none';
+    document.getElementById('prophetsSection').style.display = 'none';
+    renderCatalogCategories();
+    booksListContainer.innerHTML = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showAudio() {
+    mainMenu.style.display = 'none';
+    catalogSection.style.display = 'none';
+    audioSection.style.display = 'block';
+    document.getElementById('prophetsSection').style.display = 'none';
+    renderRecitersList();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showProphets() {
+    mainMenu.style.display = 'none';
+    catalogSection.style.display = 'none';
+    audioSection.style.display = 'none';
+    document.getElementById('prophetsSection').style.display = 'block';
+    renderProphets('videos');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ========================================
+// КАТАЛОГ КНИГ
+// ========================================
+function renderCatalogCategories() {
+    let html = '';
+    for (const [key, data] of Object.entries(library)) {
+        html += `
+            <button class="catalog-cat-btn" onclick="showBooks('${key}')">
+                <span class="cat-icon">${data.icon}</span>
+                <span class="cat-name">${data.title}</span>
+                <span class="cat-desc">${data.desc}</span>
+            </button>
+        `;
+    }
+    catalogCategories.innerHTML = html;
+    catalogCategories.style.display = 'grid';
+}
+
+function showBooks(category) {
+    const data = library[category];
+    if (!data) return;
+
+    catalogCategories.style.display = 'none';
+
+    let html = `
+        <div style="margin-bottom: 12px;">
+            <button class="back-btn" onclick="showCatalogCategories()" style="margin-bottom: 4px;">← Назад к категориям</button>
+            <h3 style="font-size: 18px; color: var(--green);">${data.title}</h3>
         </div>
+        <div class="books-list">
+    `;
 
-        <!-- ===== ГЛАВНОЕ МЕНЮ ===== -->
-        <div id="mainMenu">
-            
-            <!-- ===== ШАХАДА ===== -->
-            <div class="shahada-block">
-                <div class="shahada-text">
-                    <span class="shahada-arabic">أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ اللَّهِ</span>
-                    <span class="shahada-russian">«Свидетельствую, что нет божества, кроме Аллаха, и что Мухаммад — Посланник Аллаха»</span>
-                </div>
+    if (data.books.length === 0) {
+        html += `
+            <div class="empty-message">
+                <span class="empty-icon">📭</span>
+                В этом разделе пока нет книг.<br>
+                <span style="font-size: 13px; color: var(--text-muted);">Книги будут добавлены позже, иншаАллах.</span>
             </div>
-
-            <!-- ===== ПРИВЕТСТВИЕ ===== -->
-            <div class="greeting">
-                <p class="salam">
-                    Ас-саляму алейкум ва рахматуллахи ва баракатух!
-                    <span class="salam-translate">(Мир вам, милость Аллаха и Его благословения)</span>
-                </p>
-
-                <div class="purpose">
-                    🤲 Этот сайт создан для распространения знаний ради довольства Аллаха. 
-                    Мы стремимся принести пользу (наф’) каждому мусульманину.
-                </div>
-
-                <div class="quotes">
-                    <div class="quote-item">
-                        <span class="q-icon">📖</span>
-                        <span class="q-label">Всевышний сказал:</span>
-                        <span class="q-text">«...Скажи: "Господь мой, приумножь мои знания"»</span>
-                        <span class="q-source">(20:114)</span>
+        `;
+    } else {
+        data.books.forEach((book) => {
+            html += `
+                <div class="book-card">
+                    <div>
+                        <div class="book-name">${book.name}</div>
+                        <div class="book-author">${book.author}</div>
                     </div>
-                    <div class="quote-item">
-                        <span class="q-icon">📜</span>
-                        <span class="q-label">Пророк (ﷺ) сказал:</span>
-                        <span class="q-text">«Кто встанет на путь знаний, тому Аллах облегчит путь в Рай»</span>
-                        <span class="q-source">(Муслим)</span>
+                    <button class="download-btn" onclick="downloadBook('${book.file}', '${book.name}')">📥 Скачать</button>
+                </div>
+            `;
+        });
+    }
+
+    html += '</div>';
+    booksListContainer.innerHTML = html;
+}
+
+function showCatalogCategories() {
+    catalogCategories.style.display = 'grid';
+    booksListContainer.innerHTML = '';
+}
+
+// ========================================
+// АУДИО
+// ========================================
+function renderRecitersList() {
+    if (audioData.reciters.length === 0) {
+        audioContent.innerHTML = `
+            <div class="empty-message">
+                <span class="empty-icon">🎙️</span>
+                Аудио раздел пока пуст.<br>
+                <span style="font-size: 13px; color: var(--text-muted);">Чтецы будут добавлены позже, иншаАллах.</span>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    audioData.reciters.forEach((reciter) => {
+        html += `
+            <div class="reciter-card-link" onclick="openTelegram('${reciter.telegram}')">
+                <div class="reciter-name">
+                    <span>${reciter.icon || '🎙️'}</span>
+                    ${reciter.name}
+                </div>
+                <div class="reciter-desc">${reciter.desc || ''}</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                    <span class="reciter-count">📂 ${reciter.count || 'аудио'}</span>
+                    <span class="telegram-link-btn">📲 Перейти в Telegram →</span>
+                </div>
+            </div>
+        `;
+    });
+
+    audioContent.innerHTML = html;
+}
+
+function openTelegram(url) {
+    if (url && url !== 'https://t.me/ваша_ссылка_на_...') {
+        window.open(url, '_blank');
+    } else {
+        showToast('📲 Ссылка на Telegram-канал будет добавлена позже, иншаАллах!');
+    }
+}
+
+// ========================================
+// ИСТОРИИ ПРОРОКОВ
+// ========================================
+function renderProphets(tab) {
+    const container = document.getElementById('prophetsContent');
+    if (!container) return;
+
+    // Обновляем активную вкладку
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.tab-btn[onclick*="${tab}"]`)?.classList.add('active');
+
+    let html = '';
+
+    if (tab === 'videos') {
+        if (prophetsVideos.length === 0) {
+            html = `
+                <div class="empty-message">
+                    <span class="empty-icon">📹</span>
+                    Видео пока нет.<br>
+                    <span style="font-size: 13px; color: var(--text-muted);">Видео будут добавлены позже, иншаАллах.</span>
+                </div>
+            `;
+        } else {
+            html = '<div class="prophets-grid">';
+            prophetsVideos.forEach((video) => {
+                html += `
+                    <div class="prophet-card">
+                        <div class="prophet-video">
+                            <iframe 
+                                src="${video.embed}" 
+                                title="${video.title}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                            <a href="${video.youtube}" target="_blank" class="youtube-link-btn">▶ Смотреть на YouTube</a>
+                        </div>
+                        <div class="prophet-info">
+                            <h3 class="prophet-title">${video.title}</h3>
+                            <p class="prophet-desc">${video.desc}</p>
+                            <span class="prophet-duration">⏱ ${video.duration}</span>
+                        </div>
                     </div>
+                `;
+            });
+            html += '</div>';
+        }
+    } else if (tab === 'books') {
+        if (prophetsBooks.length === 0) {
+            html = `
+                <div class="empty-message">
+                    <span class="empty-icon">📖</span>
+                    Книги пока нет.<br>
+                    <span style="font-size: 13px; color: var(--text-muted);">Книги будут добавлены позже, иншаАллах.</span>
                 </div>
+            `;
+        } else {
+            html = '<div class="books-list">';
+            prophetsBooks.forEach((book) => {
+                html += `
+                    <div class="book-card">
+                        <div>
+                            <div class="book-name">${book.title}</div>
+                            <div class="book-author">${book.author}</div>
+                            <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">${book.desc}</div>
+                        </div>
+                        <button class="download-btn" onclick="downloadBook('${book.file}', '${book.title}')">📥 Скачать</button>
+                    </div>
+                `;
+            });
+            html += '</div>';
+        }
+    }
 
-                <p class="menu-title">📚 Выберите раздел:</p>
-            </div>
+    container.innerHTML = html;
+}
 
-            <!-- ===== КНОПКИ ===== -->
-            <div class="main-grid">
-                <button class="main-card" onclick="showCatalog()">
-                    <span class="card-icon">📚</span>
-                    <span class="card-title">Каталог книг</span>
-                    <span class="card-desc">Акыда · Тафсир · Фикх · Сира</span>
-                </button>
+function switchProphetTab(tab, btn) {
+    // Обновляем активную вкладку
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderProphets(tab);
+}
 
-                <button class="main-card" onclick="showAudio()">
-                    <span class="card-icon">🎙️</span>
-                    <span class="card-title">Аудио</span>
-                    <span class="card-desc">Чтецы · Лекции · Нашиды</span>
-                </button>
+// ========================================
+// ДЕЙСТВИЯ
+// ========================================
+function downloadBook(file, name) {
+    if (!file || file === 'путь/к/файлу.pdf') {
+        showToast(`📚 Книга "${name}" будет добавлена позже, иншаАллах!`);
+    } else {
+        const a = document.createElement('a');
+        a.href = file;
+        a.download = name + '.pdf';
+        a.click();
+        showToast(`📥 Скачивание: "${name}"`);
+    }
+}
 
-                <button class="main-card" onclick="showProphets()">
-                    <span class="card-icon">🌟</span>
-                    <span class="card-title">Истории пророков</span>
-                    <span class="card-desc">Жизнь посланников Аллаха</span>
-                </button>
+function showSection(name) {
+    showToast(`📂 Раздел "${name}" будет доступен позже, иншаАллах!`);
+}
 
-                <button class="main-card" onclick="showSection('Сподвижники')">
-                    <span class="card-icon">⚔️</span>
-                    <span class="card-title">Сподвижники</span>
-                    <span class="card-desc">Сахабы (радыАллаху анхум)</span>
-                </button>
+// ========================================
+// TOAST
+// ========================================
+let toastTimeout;
 
-                <button class="main-card" onclick="showSection('Дуа и зикры')">
-                    <span class="card-icon">🤲</span>
-                    <span class="card-title">Дуа и зикры</span>
-                    <span class="card-desc">Мольбы и поминания Аллаха</span>
-                </button>
+function showToast(msg) {
+    const old = document.querySelector('.toast');
+    if (old) { old.remove(); clearTimeout(toastTimeout); }
 
-                <button class="main-card" onclick="showSection('Видео')">
-                    <span class="card-icon">📹</span>
-                    <span class="card-title">Видео</span>
-                    <span class="card-desc">Уроки · Лекции · Проповеди</span>
-                </button>
-            </div>
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.textContent = msg;
+    document.body.appendChild(t);
 
-            <!-- ===== НИЖНЯЯ ЧАСТЬ ===== -->
-            <div class="footer-block">
-                <a href="https://t.me/sadusaduev2006" target="_blank" class="telegram-btn">
-                    💬 Написать в Telegram
-                </a>
-                <p class="feedback-text">Нашли ошибку или есть предложение? Напишите нам!</p>
+    setTimeout(() => t.classList.add('show'), 10);
 
-                <div class="dua-block">
-                    <p class="dua">
-                        🤲 Пусть Аллах примет наш труд, простит ошибки и сделает эти знания 
-                        <span class="dua-emphasis">тяжёлыми на весах в Судный день</span>. Амин!
-                    </p>
-                    <p class="dua-arabic">
-                        رَبَّنَا تَقَبَّلْ مِنَّا ۖ إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ
-                        <span class="dua-arabic-source">(2:127)</span>
-                    </p>
-                </div>
-            </div>
-        </div>
+    toastTimeout = setTimeout(() => {
+        t.classList.remove('show');
+        setTimeout(() => t.remove(), 400);
+    }, 3000);
+}
 
-        <!-- ===== КАТАЛОГ КНИГ ===== -->
-        <div id="catalogSection" style="display: none;">
-            <div class="section-top">
-                <button class="back-btn" onclick="showMainMenu()">← На главную</button>
-                <h2 class="section-title">📚 Каталог книг</h2>
-            </div>
-            <div id="catalogCategories" class="catalog-grid"></div>
-            <div id="booksListContainer"></div>
-        </div>
-
-        <!-- ===== АУДИО ===== -->
-        <div id="audioSection" style="display: none;">
-            <div class="section-top">
-                <button class="back-btn" onclick="showMainMenu()">← На главную</button>
-                <h2 class="section-title">🎙️ Аудио</h2>
-            </div>
-            <div id="audioContent"></div>
-        </div>
-
-        <!-- ===== ИСТОРИИ ПРОРОКОВ ===== -->
-        <div id="prophetsSection" style="display: none;">
-            <div class="section-top">
-                <button class="back-btn" onclick="showMainMenu()">← На главную</button>
-                <h2 class="section-title">🌟 Истории пророков</h2>
-            </div>
-            
-            <!-- Вкладки -->
-            <div class="tabs">
-                <button class="tab-btn active" onclick="switchProphetTab('videos', this)">📹 Видео</button>
-                <button class="tab-btn" onclick="switchProphetTab('books', this)">📖 Книги</button>
-            </div>
-            
-            <div id="prophetsContent"></div>
-        </div>
-
-    </div>
-
-    <script src="script.js"></script>
-
-</body>
-</html>
+// ========================================
+// ЗАГРУЗКА
+// ========================================
+document.addEventListener('DOMContentLoaded', showMainMenu);
