@@ -21,7 +21,7 @@
         <!-- ===== ГЛАВНОЕ МЕНЮ ===== -->
         <div id="mainMenu">
             
-            <!-- ===== ШАХАДА (ОДНА СТРОКА) ===== -->
+            <!-- ===== ШАХАДА ===== -->
             <div class="shahada-block">
                 <div class="shahada-text">
                     <span class="shahada-arabic">أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ اللَّهِ</span>
@@ -41,7 +41,6 @@
                     Мы стремимся принести пользу (наф’) каждому мусульманину.
                 </div>
 
-                <!-- ===== ЦИТАТЫ КОМПАКТНО ===== -->
                 <div class="quotes">
                     <div class="quote-item">
                         <span class="q-icon">📖</span>
@@ -74,13 +73,7 @@
                     <span class="card-desc">Чтецы · Лекции · Нашиды</span>
                 </button>
 
-                <button class="main-card" onclick="showSection('Видео')">
-                    <span class="card-icon">📹</span>
-                    <span class="card-title">Видео</span>
-                    <span class="card-desc">Уроки · Лекции · Проповеди</span>
-                </button>
-
-                <button class="main-card" onclick="showSection('Истории пророков')">
+                <button class="main-card" onclick="showProphets()">
                     <span class="card-icon">🌟</span>
                     <span class="card-title">Истории пророков</span>
                     <span class="card-desc">Жизнь посланников Аллаха</span>
@@ -97,18 +90,21 @@
                     <span class="card-title">Дуа и зикры</span>
                     <span class="card-desc">Мольбы и поминания Аллаха</span>
                 </button>
+
+                <button class="main-card" onclick="showSection('Видео')">
+                    <span class="card-icon">📹</span>
+                    <span class="card-title">Видео</span>
+                    <span class="card-desc">Уроки · Лекции · Проповеди</span>
+                </button>
             </div>
 
             <!-- ===== НИЖНЯЯ ЧАСТЬ ===== -->
             <div class="footer-block">
-                <!-- Telegram кнопка сверху -->
-                <a href="https://t.me/V_addd" target="_blank" class="telegram-btn">
+                <a href="https://t.me/sadusaduev2006" target="_blank" class="telegram-btn">
                     💬 Написать в Telegram
                 </a>
-                <!-- Подпись снизу -->
                 <p class="feedback-text">Нашли ошибку или есть предложение? Напишите нам!</p>
 
-                <!-- Дуа -->
                 <div class="dua-block">
                     <p class="dua">
                         🤲 Пусть Аллах примет наш труд, простит ошибки и сделает эти знания 
@@ -139,6 +135,15 @@
                 <h2 class="section-title">🎙️ Аудио</h2>
             </div>
             <div id="audioContent"></div>
+        </div>
+
+        <!-- ===== ИСТОРИИ ПРОРОКОВ ===== -->
+        <div id="prophetsSection" style="display: none;">
+            <div class="section-top">
+                <button class="back-btn" onclick="showMainMenu()">← На главную</button>
+                <h2 class="section-title">🌟 Истории пророков</h2>
+            </div>
+            <div id="prophetsContent"></div>
         </div>
 
     </div>
