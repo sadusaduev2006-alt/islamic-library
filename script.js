@@ -55,6 +55,27 @@ const audioData = {
 };
 
 // ========================================
+// ДАННЫЕ ВИДЕО (ИСТОРИИ ПРОРОКОВ)
+// ========================================
+const prophetsData = [
+    {
+        id: 1,
+        title: 'История Пророков #1: Как Аллах создал Всё - От Трона до сотворения Адама',
+        desc: 'Шейх Набиль аль-Авады рассказывает о сотворении мира, Трона Аллаха и создании Адама (мир ему)',
+        embed: 'https://www.youtube.com/embed/cy00RraxA10',
+        duration: '45:20'
+    }
+    // Добавляйте новые видео сюда:
+    // {
+    //     id: 2,
+    //     title: 'Название видео',
+    //     desc: 'Описание видео',
+    //     embed: 'https://www.youtube.com/embed/ID_ВИДЕО',
+    //     duration: '30:00'
+    // }
+];
+
+// ========================================
 // DOM-ЭЛЕМЕНТЫ
 // ========================================
 const mainMenu = document.getElementById('mainMenu');
@@ -71,6 +92,7 @@ function showMainMenu() {
     mainMenu.style.display = 'block';
     catalogSection.style.display = 'none';
     audioSection.style.display = 'none';
+    document.getElementById('prophetsSection').style.display = 'none';
     booksListContainer.innerHTML = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -79,6 +101,7 @@ function showCatalog() {
     mainMenu.style.display = 'none';
     catalogSection.style.display = 'block';
     audioSection.style.display = 'none';
+    document.getElementById('prophetsSection').style.display = 'none';
     renderCatalogCategories();
     booksListContainer.innerHTML = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -88,7 +111,17 @@ function showAudio() {
     mainMenu.style.display = 'none';
     catalogSection.style.display = 'none';
     audioSection.style.display = 'block';
+    document.getElementById('prophetsSection').style.display = 'none';
     renderRecitersList();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showProphets() {
+    mainMenu.style.display = 'none';
+    catalogSection.style.display = 'none';
+    audioSection.style.display = 'none';
+    document.getElementById('prophetsSection').style.display = 'block';
+    renderProphets();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -156,7 +189,7 @@ function showCatalogCategories() {
 }
 
 // ========================================
-// АУДИО - СПИСОК ЧТЕЦОВ
+// АУДИО
 // ========================================
 function renderRecitersList() {
     if (audioData.reciters.length === 0) {
@@ -190,15 +223,57 @@ function renderRecitersList() {
     audioContent.innerHTML = html;
 }
 
-// ========================================
-// ОТКРЫТИЕ TELEGRAM
-// ========================================
 function openTelegram(url) {
     if (url && url !== 'https://t.me/ваша_ссылка_на_...') {
         window.open(url, '_blank');
     } else {
         showToast('📲 Ссылка на Telegram-канал будет добавлена позже, иншаАллах!');
     }
+}
+
+// ========================================
+// ИСТОРИИ ПРОРОКОВ
+// ========================================
+function renderProphets() {
+    const container = document.getElementById('prophetsContent');
+    if (!container) return;
+
+    if (prophetsData.length === 0) {
+        container.innerHTML = `
+            <div class="empty-message">
+                <span class="empty-icon">🌟</span>
+                Видео пока нет.<br>
+                <span style="font-size: 13px; color: var(--text-muted);">Истории пророков будут добавлены позже, иншаАллах.</span>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '<div class="prophets-grid">';
+
+    prophetsData.forEach((prophet) => {
+        html += `
+            <div class="prophet-card">
+                <div class="prophet-video">
+                    <iframe 
+                        src="${prophet.embed}" 
+                        title="${prophet.title}" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="prophet-info">
+                    <h3 class="prophet-title">${prophet.title}</h3>
+                    <p class="prophet-desc">${prophet.desc}</p>
+                    <span class="prophet-duration">⏱ ${prophet.duration}</span>
+                </div>
+            </div>
+        `;
+    });
+
+    html += '</div>';
+    container.innerHTML = html;
 }
 
 // ========================================
