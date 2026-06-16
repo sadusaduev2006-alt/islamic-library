@@ -31,13 +31,25 @@ const library = {
 const audioData = {
     reciters: [
         {
-            name: 'Мухаммад аль-Люхайд',
+            name: 'Абу Бакр аш-Шатри',
+            desc: 'Известный чтец Корана из Саудовской Аравии',
+            icon: '🎙️',
+            telegram: 'https://t.me/ваша_ссылка_на_аш_шатри',
+            count: 'более 50 аудио'
+        },
+        {
+            name: 'Мишари ибн Рашид аль-Афаси',
+            desc: 'Всемирно известный чтец Корана',
+            icon: '🎙️',
+            telegram: 'https://t.me/ваша_ссылка_на_мишари',
+            count: 'более 80 аудио'
+        },
+        {
+            name: 'Мухаммад аль-Люхайдан',
             desc: 'Известный чтец Корана, имам мечети',
             icon: '🎙️',
-            audios: [
-                { name: '001 Аль-Фатиха', file: 'audio/luhayd/001_al_fatiha.mp3' },
-                { name: '002 Аль-Бакара', file: 'audio/luhayd/002_al_bakara.mp3' }
-            ]
+            telegram: 'https://t.me/ваша_ссылка_на_аль_люхайдан',
+            count: 'более 30 аудио'
         }
     ]
 };
@@ -144,7 +156,7 @@ function showCatalogCategories() {
 }
 
 // ========================================
-// АУДИО
+// АУДИО - СПИСОК ЧТЕЦОВ
 // ========================================
 function renderRecitersList() {
     if (audioData.reciters.length === 0) {
@@ -152,68 +164,41 @@ function renderRecitersList() {
             <div class="empty-message">
                 <span class="empty-icon">🎙️</span>
                 Аудио раздел пока пуст.<br>
-                <span style="font-size: 13px; color: var(--text-muted);">Чтецы и аудио будут добавлены позже, иншаАллах.</span>
+                <span style="font-size: 13px; color: var(--text-muted);">Чтецы будут добавлены позже, иншаАллах.</span>
             </div>
         `;
         return;
     }
 
     let html = '';
-    audioData.reciters.forEach((reciter, index) => {
-        const count = reciter.audios ? reciter.audios.length : 0;
+    audioData.reciters.forEach((reciter) => {
         html += `
-            <button class="reciter-card-btn" onclick="showReciterAudios(${index})">
+            <div class="reciter-card-link" onclick="openTelegram('${reciter.telegram}')">
                 <div class="reciter-name">
                     <span>${reciter.icon || '🎙️'}</span>
                     ${reciter.name}
                 </div>
                 <div class="reciter-desc">${reciter.desc || ''}</div>
-                <span class="reciter-count">📂 ${count} аудио</span>
-                <span class="reciter-arrow">›</span>
-            </button>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                    <span class="reciter-count">📂 ${reciter.count || 'аудио'}</span>
+                    <span class="telegram-link-btn">📲 Перейти в Telegram →</span>
+                </div>
+            </div>
         `;
     });
 
     audioContent.innerHTML = html;
 }
 
-function showReciterAudios(index) {
-    const reciter = audioData.reciters[index];
-    if (!reciter) return;
-
-    let html = `
-        <div style="margin-bottom: 14px;">
-            <button class="back-btn" onclick="renderRecitersList()" style="margin-bottom: 6px;">← Назад к чтецам</button>
-            <h3 style="font-size: 18px; color: var(--green);">
-                <span>${reciter.icon || '🎙️'}</span> ${reciter.name}
-            </h3>
-            <p style="font-size: 14px; color: var(--text-muted);">${reciter.desc || ''}</p>
-        </div>
-        <div class="audio-list">
-    `;
-
-    if (reciter.audios && reciter.audios.length > 0) {
-        reciter.audios.forEach((audio, audioIndex) => {
-            const playerId = 'player_' + index + '_' + audioIndex;
-            html += `
-                <div class="audio-item-full">
-                    <div class="audio-name">${audio.name}</div>
-                    <div class="audio-player-wrapper">
-                        <audio id="${playerId}" controls preload="metadata" style="width: 100%;">
-                            <source src="${audio.file}" type="audio/mpeg">
-                            Ваш браузер не поддерживает аудио
-                        </audio>
-                    </div>
-                    <button class="audio-download-btn" onclick="downloadAudio('${audio.file}', '${audio.name}')">📥</button>
-                </div>
-            `;
-        });
+// ========================================
+// ОТКРЫТИЕ TELEGRAM
+// ========================================
+function openTelegram(url) {
+    if (url && url !== 'https://t.me/ваша_ссылка_на_...') {
+        window.open(url, '_blank');
     } else {
-        html += `<div style="padding:12px 0;color:var(--text-muted);font-size:14px;">У этого чтеца пока нет аудио</div>`;
+        showToast('📲 Ссылка на Telegram-канал будет добавлена позже, иншаАллах!');
     }
-
-    html += '</div>';
-    audioContent.innerHTML = html;
 }
 
 // ========================================
@@ -226,32 +211,6 @@ function downloadBook(file, name) {
         const a = document.createElement('a');
         a.href = file;
         a.download = name + '.pdf';
-        a.click();
-        showToast(`📥 Скачивание: "${name}"`);
-    }
-}
-
-function playAudio(file) {
-    if (!file || file === 'путь/к/аудио.mp3') {
-        showToast('🎵 Аудио будет доступно позже, иншаАллах!');
-    } else {
-        try {
-            const audio = new Audio(file);
-            audio.play();
-            showToast('▶️ Воспроизведение');
-        } catch (e) {
-            showToast('⚠️ Ошибка воспроизведения');
-        }
-    }
-}
-
-function downloadAudio(file, name) {
-    if (!file || file === 'путь/к/аудио.mp3') {
-        showToast(`🎵 Аудио "${name}" будет добавлено позже, иншаАллах!`);
-    } else {
-        const a = document.createElement('a');
-        a.href = file;
-        a.download = name + '.mp3';
         a.click();
         showToast(`📥 Скачивание: "${name}"`);
     }
