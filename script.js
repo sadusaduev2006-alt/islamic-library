@@ -193,11 +193,17 @@ function showReciterAudios(index) {
     `;
 
     if (reciter.audios && reciter.audios.length > 0) {
-        reciter.audios.forEach((audio) => {
+        reciter.audios.forEach((audio, audioIndex) => {
+            const playerId = 'player_' + index + '_' + audioIndex;
             html += `
-                <div class="audio-item">
-                    <span class="audio-name">${audio.name}</span>
-                    <button class="audio-play-btn" onclick="playAudio('${audio.file}')">▶</button>
+                <div class="audio-item-full">
+                    <div class="audio-name">${audio.name}</div>
+                    <div class="audio-player-wrapper">
+                        <audio id="${playerId}" controls preload="metadata" style="width: 100%;">
+                            <source src="${audio.file}" type="audio/mpeg">
+                            Ваш браузер не поддерживает аудио
+                        </audio>
+                    </div>
                     <button class="audio-download-btn" onclick="downloadAudio('${audio.file}', '${audio.name}')">📥</button>
                 </div>
             `;
