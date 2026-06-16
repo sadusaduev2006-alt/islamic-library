@@ -114,17 +114,10 @@ const prophetsVideos = [
 const prophetsBooks = [
     {
         id: 1,
-        title: 'Истории пророков (Книга)',
-        author: 'Ибн Касир',
-        desc: 'Полное собрание историй всех пророков от Адама до Мухаммада (ﷺ)',
-        file: 'books/prophets/istorii_prorokov_ibn_kasir.pdf'
-    },
-    {
-        id: 2,
-        title: 'Жизнь пророков',
-        author: 'Шейх Набиль аль-Авады',
-        desc: 'Книга на основе лекций шейха Набиля аль-Авады',
-        file: 'books/prophets/zhizn_prorokov.pdf'
+        title: 'Рассказы о пророках',
+        author: 'Имам Ибн Касир',
+        desc: 'Полное собрание историй всех пророков от Адама до Мухаммада (ﷺ) по достоверным источникам',
+        file: 'books/prophets/Рассказы о пророках - имам Ибн Касир.pdf'
     }
 ];
 
@@ -146,6 +139,7 @@ function showMainMenu() {
     catalogSection.style.display = 'none';
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'none';
+    document.getElementById('pdfViewer').style.display = 'none';
     booksListContainer.innerHTML = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -155,6 +149,7 @@ function showCatalog() {
     catalogSection.style.display = 'block';
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'none';
+    document.getElementById('pdfViewer').style.display = 'none';
     renderCatalogCategories();
     booksListContainer.innerHTML = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -165,6 +160,7 @@ function showAudio() {
     catalogSection.style.display = 'none';
     audioSection.style.display = 'block';
     document.getElementById('prophetsSection').style.display = 'none';
+    document.getElementById('pdfViewer').style.display = 'none';
     renderRecitersList();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -174,6 +170,7 @@ function showProphets() {
     catalogSection.style.display = 'none';
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'block';
+    document.getElementById('pdfViewer').style.display = 'none';
     renderProphets('videos');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -291,7 +288,6 @@ function renderProphets(tab) {
     const container = document.getElementById('prophetsContent');
     if (!container) return;
 
-    // Обновляем активную вкладку
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelector(`.tab-btn[onclick*="${tab}"]`)?.classList.add('active');
 
@@ -344,13 +340,14 @@ function renderProphets(tab) {
             html = '<div class="books-list">';
             prophetsBooks.forEach((book) => {
                 html += `
-                    <div class="book-card">
+                    <div class="book-card" style="cursor: pointer;" onclick="openPdfViewer('${book.file}')">
                         <div>
                             <div class="book-name">${book.title}</div>
                             <div class="book-author">${book.author}</div>
                             <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">${book.desc}</div>
+                            <div style="font-size: 12px; color: var(--gold); margin-top: 4px;">📖 Нажмите, чтобы читать онлайн</div>
                         </div>
-                        <button class="download-btn" onclick="downloadBook('${book.file}', '${book.title}')">📥 Скачать</button>
+                        <button class="download-btn" onclick="event.stopPropagation(); downloadBook('${book.file}', '${book.title}')">📥 Скачать</button>
                     </div>
                 `;
             });
@@ -362,10 +359,46 @@ function renderProphets(tab) {
 }
 
 function switchProphetTab(tab, btn) {
-    // Обновляем активную вкладку
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderProphets(tab);
+}
+
+// ========================================
+// ПРОСМОТР PDF
+// ========================================
+let currentPdfUrl = '';
+
+function openPdfViewer(pdfUrl) {
+    currentPdfUrl = pdfUrl;
+    document.getElementById('prophetsContent').style.display = 'none';
+    document.getElementById('pdfViewer').style.display = 'block';
+    
+    const container = document.getElementById('pdfContainer');
+    container.innerHTML = `
+        <iframe src="${pdfUrl}" 
+                width="100%" 
+                height="100%" 
+                style="border: none;">
+        </iframe>
+    `;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function closePdfViewer() {
+    document.getElementById('pdfViewer').style.display = 'none';
+    document.getElementById('prophetsContent').style.display = 'block';
+    document.getElementById('pdfContainer').innerHTML = '';
+}
+
+function downloadCurrentPdf() {
+    if (currentPdfUrl) {
+        const a = document.createElement('a');
+        a.href = currentPdfUrl;
+        a.download = currentPdfUrl.split('/').pop();
+        a.click();
+        showToast('📥 Скачивание началось');
+    }
 }
 
 // ========================================
