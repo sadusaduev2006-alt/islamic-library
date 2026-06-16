@@ -689,3 +689,232 @@ body {
         margin-left: 30px;
     }
 }
+/* ========================================
+   ИСТОРИИ ПРОРОКОВ - СТИЛИ
+   ======================================== */
+#prophetsSection {
+    animation: fadeUp 0.3s ease;
+}
+
+.prophets-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.prophet-card {
+    background: var(--white);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(201, 168, 76, 0.06);
+}
+
+.prophet-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-4px);
+    border-color: rgba(201, 168, 76, 0.15);
+}
+
+.prophet-video {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    overflow: hidden;
+    background: #000;
+}
+
+.prophet-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.prophet-info {
+    padding: 16px 18px 18px;
+}
+
+.prophet-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 4px;
+}
+
+.prophet-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.prophet-duration {
+    display: inline-block;
+    font-size: 13px;
+    color: var(--white);
+    background: var(--green);
+    padding: 2px 12px;
+    border-radius: 50px;
+    font-weight: 500;
+}
+
+/* ========================================
+   КАРТОЧКИ ЧТЕЦОВ (С ССЫЛКАМИ НА TELEGRAM)
+   ======================================== */
+.reciter-card-link {
+    display: block;
+    width: 100%;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    background: var(--white);
+    border: 2px solid rgba(26, 90, 58, 0.06);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-family: inherit;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.reciter-card-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.05), rgba(26, 90, 58, 0.03));
+    opacity: 0;
+    transition: all 0.4s ease;
+    border-radius: 20px;
+}
+
+.reciter-card-link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 44px rgba(0, 0, 0, 0.08);
+    border-color: var(--gold);
+    background: var(--gold-soft);
+}
+
+.reciter-card-link:hover::before {
+    opacity: 1;
+}
+
+.reciter-card-link:active {
+    transform: scale(0.98);
+}
+
+.reciter-card-link .reciter-name {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.reciter-card-link .reciter-name span:first-child {
+    font-size: 28px;
+}
+
+.reciter-card-link .reciter-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    margin-left: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.reciter-card-link .reciter-count {
+    font-size: 13px;
+    color: var(--text-muted);
+    position: relative;
+    z-index: 1;
+}
+
+.reciter-card-link .telegram-link-btn {
+    background: var(--green);
+    color: var(--white);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.reciter-card-link:hover .telegram-link-btn {
+    background: var(--green-light);
+    transform: translateX(4px);
+}
+
+/* ========================================
+   АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ
+   ======================================== */
+@media (max-width: 700px) {
+    .prophets-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .prophet-title {
+        font-size: 15px;
+    }
+    .prophet-desc {
+        font-size: 13px;
+    }
+    .prophet-info {
+        padding: 12px 14px 14px;
+    }
+
+    .reciter-card-link {
+        padding: 14px 16px;
+        border-radius: 16px;
+    }
+    .reciter-card-link .reciter-name {
+        font-size: 16px;
+    }
+    .reciter-card-link .reciter-name span:first-child {
+        font-size: 22px;
+    }
+    .reciter-card-link .reciter-desc {
+        font-size: 12px;
+        margin-left: 34px;
+    }
+    .reciter-card-link .telegram-link-btn {
+        font-size: 11px;
+        padding: 4px 12px;
+    }
+    .reciter-card-link .reciter-count {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 360px) {
+    .reciter-card-link {
+        padding: 12px 14px;
+        border-radius: 14px;
+    }
+    .reciter-card-link .reciter-name {
+        font-size: 14px;
+    }
+    .reciter-card-link .reciter-name span:first-child {
+        font-size: 18px;
+    }
+    .reciter-card-link .reciter-desc {
+        font-size: 11px;
+        margin-left: 30px;
+    }
+}
