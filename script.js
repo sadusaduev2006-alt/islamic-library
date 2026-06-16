@@ -1,27 +1,66 @@
+// ========================================
+// ДАННЫЕ КНИГ
+// ========================================
 const library = {
-    'akyda': {
-        title: '📖 Акыда',
-        desc: 'основы вероубеждения',
-        icon: '📖',
-        books: []
+    // ========================================
+    // ВСЕ КНИГИ (общий список)
+    // ========================================
+    all: {
+        title: '📚 Все книги',
+        books: [
+            {
+                name: 'Основы веры',
+                author: 'Проф. Салих ас-Сухейми, Проф. Абд ар-Раззак аль-Бадр, Проф. Ибрахим ар-Рухейли',
+                desc: 'Издательство ummah. Под редакцией Факихи А.Н., А. аль-Гамиди. Перевод с арабского Кулиева Э.Р.',
+                file: 'books/aqeedah/Основы веры.pdf'
+            },
+            {
+                name: 'Слово единобожия',
+                author: "'Абд ар-Раззак ибн 'Абд аль-Мухсин аль-Бадр",
+                desc: 'Книга о таухиде и искренности в поклонении Аллаху',
+                file: 'books/aqeedah/Слово единобожия.pdf'
+            },
+            {
+                name: 'Сира Пророка (ﷺ)',
+                author: 'Сафи ар-Рахман аль-Мубаракфури',
+                desc: 'Достоверная биография Пророка Мухаммада (ﷺ) от рождения до смерти',
+                file: 'books/sira/Сира Пророка (ﷺ).pdf'
+            }
+        ]
     },
-    'tafsir': {
-        title: '📖 Тафсир',
-        desc: 'толкование Корана',
-        icon: '📖',
-        books: []
+    // ========================================
+    // ВЕРОУБЕЖДЕНИЕ (Акыда)
+    // ========================================
+    aqeedah: {
+        title: '📖 Вероубеждение',
+        books: [
+            {
+                name: 'Основы веры',
+                author: 'Проф. Салих ас-Сухейми, Проф. Абд ар-Раззак аль-Бадр, Проф. Ибрахим ар-Рухейли',
+                desc: 'Издательство ummah. Под редакцией Факихи А.Н., А. аль-Гамиди. Перевод с арабского Кулиева Э.Р.',
+                file: 'books/aqeedah/Основы веры.pdf'
+            },
+            {
+                name: 'Слово единобожия',
+                author: "'Абд ар-Раззак ибн 'Абд аль-Мухсин аль-Бадр",
+                desc: 'Книга о таухиде и искренности в поклонении Аллаху',
+                file: 'books/aqeedah/Слово единобожия.pdf'
+            }
+        ]
     },
-    'fikh': {
-        title: '📖 Фикх',
-        desc: 'практические предписания',
-        icon: '📖',
-        books: []
-    },
-    'sira': {
+    // ========================================
+    // СИРА (жизнь Пророка ﷺ)
+    // ========================================
+    sira: {
         title: '📖 Сира',
-        desc: 'жизнь Пророка (ﷺ)',
-        icon: '📖',
-        books: []
+        books: [
+            {
+                name: 'Сира Пророка (ﷺ)',
+                author: 'Сафи ар-Рахман аль-Мубаракфури',
+                desc: 'Достоверная биография Пророка Мухаммада (ﷺ) от рождения до смерти',
+                file: 'books/sira/Сира Пророка (ﷺ).pdf'
+            }
+        ]
     }
 };
 
@@ -127,8 +166,7 @@ const prophetsBooks = [
 const mainMenu = document.getElementById('mainMenu');
 const catalogSection = document.getElementById('catalogSection');
 const audioSection = document.getElementById('audioSection');
-const catalogCategories = document.getElementById('catalogCategories');
-const booksListContainer = document.getElementById('booksListContainer');
+const catalogContent = document.getElementById('catalogContent');
 const audioContent = document.getElementById('audioContent');
 
 // ========================================
@@ -140,7 +178,6 @@ function showMainMenu() {
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'none';
     document.getElementById('pdfViewer').style.display = 'none';
-    booksListContainer.innerHTML = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -150,8 +187,7 @@ function showCatalog() {
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'none';
     document.getElementById('pdfViewer').style.display = 'none';
-    renderCatalogCategories();
-    booksListContainer.innerHTML = '';
+    renderCatalog('all');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -178,32 +214,15 @@ function showProphets() {
 // ========================================
 // КАТАЛОГ КНИГ
 // ========================================
-function renderCatalogCategories() {
-    let html = '';
-    for (const [key, data] of Object.entries(library)) {
-        html += `
-            <button class="catalog-cat-btn" onclick="showBooks('${key}')">
-                <span class="cat-icon">${data.icon}</span>
-                <span class="cat-name">${data.title}</span>
-                <span class="cat-desc">${data.desc}</span>
-            </button>
-        `;
-    }
-    catalogCategories.innerHTML = html;
-    catalogCategories.style.display = 'grid';
-}
+function renderCatalog(tab) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.tab-btn[onclick*="${tab}"]`)?.classList.add('active');
 
-function showBooks(category) {
-    const data = library[category];
+    const data = library[tab];
     if (!data) return;
 
-    catalogCategories.style.display = 'none';
-
     let html = `
-        <div style="margin-bottom: 12px;">
-            <button class="back-btn" onclick="showCatalogCategories()" style="margin-bottom: 4px;">← Назад к категориям</button>
-            <h3 style="font-size: 18px; color: var(--green);">${data.title}</h3>
-        </div>
+        <h3 style="font-size: 18px; color: var(--green); margin-bottom: 12px;">${data.title}</h3>
         <div class="books-list">
     `;
 
@@ -218,24 +237,25 @@ function showBooks(category) {
     } else {
         data.books.forEach((book) => {
             html += `
-                <div class="book-card">
+                <div class="book-card" style="cursor: pointer;" onclick="openPdfViewer('${book.file}')">
                     <div>
                         <div class="book-name">${book.name}</div>
                         <div class="book-author">${book.author}</div>
+                        <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">${book.desc || ''}</div>
+                        <div style="font-size: 12px; color: var(--gold); margin-top: 4px;">📖 Нажмите, чтобы читать онлайн</div>
                     </div>
-                    <button class="download-btn" onclick="downloadBook('${book.file}', '${book.name}')">📥 Скачать</button>
+                    <button class="download-btn" onclick="event.stopPropagation(); downloadBook('${book.file}', '${book.name}')">📥 Скачать</button>
                 </div>
             `;
         });
     }
 
     html += '</div>';
-    booksListContainer.innerHTML = html;
+    catalogContent.innerHTML = html;
 }
 
-function showCatalogCategories() {
-    catalogCategories.style.display = 'grid';
-    booksListContainer.innerHTML = '';
+function switchCatalogTab(tab, btn) {
+    renderCatalog(tab);
 }
 
 // ========================================
@@ -371,6 +391,7 @@ let currentPdfUrl = '';
 
 function openPdfViewer(pdfUrl) {
     currentPdfUrl = pdfUrl;
+    document.getElementById('catalogContent').style.display = 'none';
     document.getElementById('prophetsContent').style.display = 'none';
     document.getElementById('pdfViewer').style.display = 'block';
     
@@ -387,6 +408,7 @@ function openPdfViewer(pdfUrl) {
 
 function closePdfViewer() {
     document.getElementById('pdfViewer').style.display = 'none';
+    document.getElementById('catalogContent').style.display = 'block';
     document.getElementById('prophetsContent').style.display = 'block';
     document.getElementById('pdfContainer').innerHTML = '';
 }
