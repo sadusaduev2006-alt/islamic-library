@@ -57,7 +57,7 @@ const audioData = {
 // ========================================
 // ДАННЫЕ ВИДЕО (ИСТОРИИ ПРОРОКОВ)
 // ========================================
-const prophetsData = [
+const prophetsVideos = [
     {
         id: 1,
         title: 'История Пророков #1: Как Аллах создал Всё - От Трона до сотворения Адама',
@@ -109,6 +109,26 @@ const prophetsData = [
 ];
 
 // ========================================
+// ДАННЫЕ КНИГ (ИСТОРИИ ПРОРОКОВ)
+// ========================================
+const prophetsBooks = [
+    {
+        id: 1,
+        title: 'Истории пророков (Книга)',
+        author: 'Ибн Касир',
+        desc: 'Полное собрание историй всех пророков от Адама до Мухаммада (ﷺ)',
+        file: 'books/prophets/istorii_prorokov_ibn_kasir.pdf'
+    },
+    {
+        id: 2,
+        title: 'Жизнь пророков',
+        author: 'Шейх Набиль аль-Авады',
+        desc: 'Книга на основе лекций шейха Набиля аль-Авады',
+        file: 'books/prophets/zhizn_prorokov.pdf'
+    }
+];
+
+// ========================================
 // DOM-ЭЛЕМЕНТЫ
 // ========================================
 const mainMenu = document.getElementById('mainMenu');
@@ -154,7 +174,8 @@ function showProphets() {
     catalogSection.style.display = 'none';
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'block';
-    renderProphets();
+    currentProphetTab = 'videos';
+    renderProphets('videos');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -267,47 +288,88 @@ function openTelegram(url) {
 // ========================================
 // ИСТОРИИ ПРОРОКОВ
 // ========================================
-function renderProphets() {
+let currentProphetTab = 'videos';
+
+function renderProphets(tab) {
     const container = document.getElementById('prophetsContent');
     if (!container) return;
 
-    if (prophetsData.length === 0) {
-        container.innerHTML = `
-            <div class="empty-message">
-                <span class="empty-icon">🌟</span>
-                Видео пока нет.<br>
-                <span style="font-size: 13px; color: var(--text-muted);">Истории пророков будут добавлены позже, иншаАллах.</span>
-            </div>
-        `;
-        return;
+    // Обновляем активную вкладку
+    currentProphetTab = tab;
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.tab-btn[onclick*="${tab}"]`)?.classList.add('active');
+
+    let html = '';
+
+    if (tab === 'videos') {
+        if (prophetsVideos.length === 0) {
+            html = `
+                <div class="empty-message">
+                    <span class="empty-icon">📹</span>
+                    Видео пока нет.<br>
+                    <span style="font-size: 13px; color: var(--text-muted);">Видео будут добавлены позже, иншаАллах.</span>
+                </div>
+            `;
+        } else {
+            html = '<div class="prophets-grid">';
+            prophetsVideos.forEach((video) => {
+                html += `
+                    <div class="prophet-card">
+                        <div class="prophet-video">
+                            <iframe 
+                                src="${video.embed}" 
+                                title="${video.title}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                            <a href="${video.youtube}" target="_blank" class="youtube-link-btn">▶ Смотреть на YouTube</a>
+                        </div>
+                        <div class="prophet-info">
+                            <h3 class="prophet-title">${video.title}</h3>
+                            <p class="prophet-desc">${video.desc}</p>
+                            <span class="prophet-duration">⏱ ${video.duration}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+        }
+    } else if (tab === 'books') {
+        if (prophetsBooks.length === 0) {
+            html = `
+                <div class="empty-message">
+                    <span class="empty-icon">📖</span>
+                    Книги пока нет.<br>
+                    <span style="font-size: 13px; color: var(--text-muted);">Книги будут добавлены позже, иншаАллах.</span>
+                </div>
+            `;
+        } else {
+            html = '<div class="books-list">';
+            prophetsBooks.forEach((book) => {
+                html += `
+                    <div class="book-card">
+                        <div>
+                            <div class="book-name">${book.title}</div>
+                            <div class="book-author">${book.author}</div>
+                            <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">${book.desc}</div>
+                        </div>
+                        <button class="download-btn" onclick="downloadBook('${book.file}', '${book.title}')">📥 Скачать</button>
+                    </div>
+                `;
+            });
+            html += '</div>';
+        }
     }
 
-    let html = '<div class="prophets-grid">';
-
-    prophetsData.forEach((prophet) => {
-        html += `
-            <div class="prophet-card">
-                <div class="prophet-video">
-                    <iframe 
-                        src="${prophet.embed}" 
-                        title="${prophet.title}" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
-                    <a href="${prophet.youtube}" target="_blank" class="youtube-link-btn">▶ Смотреть на YouTube</a>
-                </div>
-                <div class="prophet-info">
-                    <h3 class="prophet-title">${prophet.title}</h3>
-                    <p class="prophet-desc">${prophet.desc}</p>
-                    <span class="prophet-duration">⏱ ${prophet.duration}</span>
-                </div>
-            </div>
-        `;
-    });
-
-    html += '</div>';
     container.innerHTML = html;
+}
+
+function switchProphetTab(tab, btn) {
+    // Обновляем активную вкладку
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderProphets(tab);
 }
 
 // ========================================
