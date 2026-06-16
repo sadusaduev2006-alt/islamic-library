@@ -38,6 +38,7 @@ const audioData = {
                 { name: '001 Аль-Фатиха', file: 'audio/luhayd/001_al_fatiha.mp3' }
             ]
         }
+        // Добавляйте новых чтецов сюда
     ]
 };
 
@@ -75,7 +76,7 @@ function showAudio() {
     mainMenu.style.display = 'none';
     catalogSection.style.display = 'none';
     audioSection.style.display = 'block';
-    renderAudioContent();
+    renderRecitersList();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -105,7 +106,7 @@ function showBooks(category) {
 
     let html = `
         <div style="margin-bottom: 12px;">
-            <button class="back-btn" onclick="showCatalogCategories()" style="margin-bottom: 4px;">← Назад</button>
+            <button class="back-btn" onclick="showCatalogCategories()" style="margin-bottom: 4px;">← Назад к категориям</button>
             <h3 style="font-size: 18px; color: var(--green);">${data.title}</h3>
         </div>
         <div class="books-list">
@@ -143,9 +144,9 @@ function showCatalogCategories() {
 }
 
 // ========================================
-// АУДИО
+// АУДИО (НОВАЯ ЛОГИКА)
 // ========================================
-function renderAudioContent() {
+function renderRecitersList() {
     if (audioData.reciters.length === 0) {
         audioContent.innerHTML = `
             <div class="empty-message">
@@ -158,34 +159,54 @@ function renderAudioContent() {
     }
 
     let html = '';
-    audioData.reciters.forEach((reciter) => {
+    audioData.reciters.forEach((reciter, index) => {
         html += `
-            <div class="reciter-card">
+            <button class="reciter-card-btn" onclick="showReciterAudios(${index})">
                 <div class="reciter-name">
                     <span>${reciter.icon || '🎙️'}</span>
                     ${reciter.name}
                 </div>
                 <div class="reciter-desc">${reciter.desc || ''}</div>
-                <div class="audio-list">
+                <div style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">
+                    📂 ${reciter.audios ? reciter.audios.length : 0} аудио
+                </div>
+            </button>
         `;
-
-        if (reciter.audios && reciter.audios.length > 0) {
-            reciter.audios.forEach((audio) => {
-                html += `
-                    <div class="audio-item">
-                        <span class="audio-name">${audio.name}</span>
-                        <button class="audio-play-btn" onclick="playAudio('${audio.file}')">▶</button>
-                        <button class="audio-download-btn" onclick="downloadAudio('${audio.file}', '${audio.name}')">📥</button>
-                    </div>
-                `;
-            });
-        } else {
-            html += `<div style="padding:6px 0;color:var(--text-muted);font-size:13px;">Аудио пока нет</div>`;
-        }
-
-        html += `</div></div>`;
     });
 
+    audioContent.innerHTML = html;
+}
+
+function showReciterAudios(index) {
+    const reciter = audioData.reciters[index];
+    if (!reciter) return;
+
+    let html = `
+        <div style="margin-bottom: 14px;">
+            <button class="back-btn" onclick="renderRecitersList()" style="margin-bottom: 6px;">← Назад к чтецам</button>
+            <h3 style="font-size: 18px; color: var(--green);">
+                <span>${reciter.icon || '🎙️'}</span> ${reciter.name}
+            </h3>
+            <p style="font-size: 14px; color: var(--text-muted);">${reciter.desc || ''}</p>
+        </div>
+        <div class="audio-list">
+    `;
+
+    if (reciter.audios && reciter.audios.length > 0) {
+        reciter.audios.forEach((audio) => {
+            html += `
+                <div class="audio-item">
+                    <span class="audio-name">${audio.name}</span>
+                    <button class="audio-play-btn" onclick="playAudio('${audio.file}')">▶</button>
+                    <button class="audio-download-btn" onclick="downloadAudio('${audio.file}', '${audio.name}')">📥</button>
+                </div>
+            `;
+        });
+    } else {
+        html += `<div style="padding:12px 0;color:var(--text-muted);font-size:14px;">У этого чтеца пока нет аудио</div>`;
+    }
+
+    html += '</div>';
     audioContent.innerHTML = html;
 }
 
@@ -208,8 +229,13 @@ function playAudio(file) {
     if (!file || file === 'путь/к/аудио.mp3') {
         showToast('🎵 Аудио будет доступно позже, иншаАллах!');
     } else {
-        new Audio(file).play();
-        showToast('▶️ Воспроизведение');
+        try {
+            const audio = new Audio(file);
+            audio.play();
+            showToast('▶️ Воспроизведение');
+        } catch (e) {
+            showToast('⚠️ Ошибка воспроизведения');
+        }
     }
 }
 
