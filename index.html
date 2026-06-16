@@ -64,7 +64,7 @@
                 <button class="main-card" onclick="showCatalog()">
                     <span class="card-icon">📚</span>
                     <span class="card-title">Каталог книг</span>
-                    <span class="card-desc">Акыда · Тафсир · Фикх · Сира</span>
+                    <span class="card-desc">Основы веры · Тафсир · Сира</span>
                 </button>
 
                 <button class="main-card" onclick="showAudio()">
@@ -124,8 +124,15 @@
                 <button class="back-btn" onclick="showMainMenu()">← На главную</button>
                 <h2 class="section-title">📚 Каталог книг</h2>
             </div>
-            <div id="catalogCategories" class="catalog-grid"></div>
-            <div id="booksListContainer"></div>
+            
+            <!-- Вкладки -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchCatalogTab('all', this)">📚 Все книги</button>
+                <button class="tab-btn" onclick="switchCatalogTab('aqeedah', this)">📖 Вероубеждение</button>
+                <button class="tab-btn" onclick="switchCatalogTab('sira', this)">📖 Сира</button>
+            </div>
+            
+            <div id="catalogContent"></div>
         </div>
 
         <!-- ===== АУДИО ===== -->
@@ -156,7 +163,7 @@
         <!-- ===== ПРОСМОТР PDF ===== -->
         <div id="pdfViewer" style="display: none; margin-top: 16px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-                <button class="back-btn" onclick="closePdfViewer()">← Назад к книгам</button>
+                <button class="back-btn" onclick="closePdfViewer()">← Назад</button>
                 <button class="download-btn" onclick="downloadCurrentPdf()">📥 Скачать PDF</button>
             </div>
             <div id="pdfContainer" style="width: 100%; height: 600px; border: 1px solid rgba(201, 168, 76, 0.2); border-radius: 12px; overflow: hidden; background: #f5f5f5;">
