@@ -79,16 +79,16 @@
                     <span class="card-desc">Жизнь посланников Аллаха</span>
                 </button>
 
+                <button class="main-card" onclick="showAdhkar()">
+                    <span class="card-icon">📿</span>
+                    <span class="card-title">Азкары</span>
+                    <span class="card-desc">Утренние · Вечерние · Дуа</span>
+                </button>
+
                 <button class="main-card" onclick="showSection('Сподвижники')">
                     <span class="card-icon">⚔️</span>
                     <span class="card-title">Сподвижники</span>
                     <span class="card-desc">Сахабы (радыАллаху анхум)</span>
-                </button>
-
-                <button class="main-card" onclick="showSection('Дуа и зикры')">
-                    <span class="card-icon">🤲</span>
-                    <span class="card-title">Дуа и зикры</span>
-                    <span class="card-desc">Мольбы и поминания Аллаха</span>
                 </button>
 
                 <button class="main-card" onclick="showSection('Видео')">
@@ -143,13 +143,28 @@
                 <h2 class="section-title">🌟 Истории пророков</h2>
             </div>
             
-            <!-- Вкладки -->
             <div class="tabs">
                 <button class="tab-btn active" onclick="switchProphetTab('videos', this)">📹 Видео</button>
                 <button class="tab-btn" onclick="switchProphetTab('books', this)">📖 Книги</button>
             </div>
             
             <div id="prophetsContent"></div>
+        </div>
+
+        <!-- ===== АЗКАРЫ ===== -->
+        <div id="adhkarSection" style="display: none;">
+            <div class="section-top">
+                <button class="back-btn" onclick="showMainMenu()">← На главную</button>
+                <h2 class="section-title">📿 Азкары</h2>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchAdhkarTab('morning', this)">🌅 Утренние</button>
+                <button class="tab-btn" onclick="switchAdhkarTab('evening', this)">🌙 Вечерние</button>
+                <button class="tab-btn" onclick="switchAdhkarTab('dua', this)">🤲 Дуа</button>
+            </div>
+            
+            <div id="adhkarContent"></div>
         </div>
 
         <!-- ===== ПРОСМОТР PDF ===== -->
