@@ -303,7 +303,6 @@ function toggleFavorite(bookKey) {
             renderProphets('books');
         }
     }
-    // Если мы в избранном, обновляем и его
     const favSection = document.getElementById('favoritesSection');
     if (favSection.style.display !== 'none') {
         renderFavorites();
@@ -408,11 +407,13 @@ function renderCatalogCategories() {
     catalogContent.innerHTML = html;
 }
 
+// ========================================
+// ИСПРАВЛЕННАЯ ФУНКЦИЯ — КНИГИ ОТКРЫВАЮТСЯ СРАЗУ
+// ========================================
 function renderCategoryBooks(categoryKey) {
     const category = library[categoryKey];
     if (!category) return;
 
-    // Сохраняем категорию для обновления
     catalogSection.dataset.category = categoryKey;
 
     let html = `
@@ -437,7 +438,7 @@ function renderCategoryBooks(categoryKey) {
             const bookKey = categoryKey + '|' + book.name;
             const isFav = isFavorite(bookKey);
             html += `
-                <div class="book-card">
+                <div class="book-card" onclick="openPdfViewer('${book.file}')">
                     <div class="book-info">
                         <div class="book-name">${book.name}</div>
                         <div class="book-author">${book.author}</div>
@@ -556,7 +557,7 @@ function renderProphets(tab) {
                 const bookKey = 'prophets|' + book.title;
                 const isFav = isFavorite(bookKey);
                 html += `
-                    <div class="book-card" style="cursor: pointer;" onclick="openPdfViewer('${book.file}')">
+                    <div class="book-card" onclick="openPdfViewer('${book.file}')">
                         <div class="book-info">
                             <div class="book-name">${book.title}</div>
                             <div class="book-author">${book.author}</div>
@@ -641,7 +642,6 @@ function renderFavorites() {
 
     let html = '<div class="books-list">';
     
-    // Собираем все книги из всех категорий
     const allBooks = {};
     for (const [catKey, catData] of Object.entries(library)) {
         catData.books.forEach(book => {
@@ -652,7 +652,6 @@ function renderFavorites() {
         });
     }
     
-    // Также проверяем книги из пророков
     prophetsBooks.forEach(book => {
         const key = 'prophets|' + book.title;
         if (favorites.includes(key)) {
@@ -672,7 +671,7 @@ function renderFavorites() {
 
     for (const [key, book] of Object.entries(allBooks)) {
         html += `
-            <div class="book-card" style="cursor: pointer;" onclick="openPdfViewer('${book.file}')">
+            <div class="book-card" onclick="openPdfViewer('${book.file}')">
                 <div class="book-info">
                     <div class="book-name">${book.name}</div>
                     <div class="book-author">${book.author}</div>
