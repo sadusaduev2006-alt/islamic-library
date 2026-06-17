@@ -85,23 +85,94 @@ const audioData = {
             desc: 'Известный чтец Корана из Саудовской Аравии',
             icon: '🎙️',
             telegram: 'https://t.me/audiooo_quran',
-            count: 'более 50 аудио'
+            count: '114 аудио'
         },
         {
             name: 'Мишари ибн Рашид аль-Афаси',
             desc: 'Всемирно известный чтец Корана',
             icon: '🎙️',
             telegram: 'https://t.me/audiooo_quran',
-            count: 'более 80 аудио'
+            count: '114 аудио'
         },
         {
             name: 'Мухаммад аль-Люхайдан',
             desc: 'Известный чтец Корана, имам мечети',
             icon: '🎙️',
             telegram: 'https://t.me/audiooo_quran',
-            count: 'более 30 аудио'
+            count: '114 аудио'
         }
     ]
+};
+
+// ========================================
+// ДАННЫЕ АЗКАРОВ
+// ========================================
+const adhkarData = {
+    morning: {
+        title: '🌅 Утренние азкары',
+        items: [
+            {
+                arabic: 'أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ رَبِّ الْعَالَمِينَ',
+                transliteration: 'Асбахьна ва асбахьаль мульку лиЛлях1и Роббиль 1алямин.',
+                translation: 'Мы дожили до утра, и этим утром вся власть принадлежит Аллаху, Господу миров.'
+            },
+            {
+                arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ هَذَا الْيَوْمِ فَتْحَهُ وَنَصْرَهُ وَنُورَهُ وَبَرَكَتَهُ وَهُدَاهُ',
+                transliteration: 'Аллах1умма инни ас\'алюка хайро х1аз\'аль йавми фатхьах1у, ва насрох1у, ва нуурох1у, ва баракатах1у, ва х1удах1у.',
+                translation: 'О Аллах, поистине, я прошу Тебя о благе этого дня, о помощи и победе, о свете, благодати и прямом руководстве в этот день.'
+            },
+            {
+                arabic: 'اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ',
+                transliteration: 'Аллах1умма бика асбахьна ва бика амсайна ва бика нахьйа ва бика намууту ва иляйка ннушуур.',
+                translation: 'О Аллах, благодаря Тебе мы дожили до утра и благодаря Тебе мы доживем до вечера, благодаря Тебе мы живем, и Ты лишаешь нас жизни, и к Тебе возвращение.'
+            },
+            {
+                arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ',
+                transliteration: 'Аллах1умма инни ас\'алюкаль 1афийата фи ддунья валь ахирати.',
+                translation: 'О Аллах, поистине, я прошу Тебя о благополучии в этом мире и в мире ином.'
+            }
+        ]
+    },
+    evening: {
+        title: '🌙 Вечерние азкары',
+        items: [
+            {
+                arabic: 'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ رَبِّ الْعَالَمِينَ',
+                transliteration: 'Амсайна ва амсаль мульку лиЛлях1и Роббиль 1алямин.',
+                translation: 'Мы дожили до вечера, и этим вечером вся власть принадлежит Аллаху, Господу миров.'
+            },
+            {
+                arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ هَذِهِ اللَّيْلَةِ فَتْحَهَا وَنَصْرَهَا وَنُورَهَا وَبَرَكَتَهَا وَهُدَاهَا',
+                transliteration: 'Аллах1умма инни ас\'алюка хайро х1аз\'ихиль лайлати фатхьах1а, ва насрох1а, ва нуурох1а, ва баракатах1а, ва х1удах1а.',
+                translation: 'О Аллах, поистине, я прошу Тебя о благе этой ночи, о помощи и победе, о свете, благодати и прямом руководстве в эту ночь.'
+            },
+            {
+                arabic: 'اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ الْمَصِيرُ',
+                transliteration: 'Аллах1умма бика амсайна ва бика асбахьна ва бика нахьйа ва бика намууту ва иляйкаль масыр.',
+                translation: 'О Аллах, благодаря Тебе мы дожили до вечера и благодаря Тебе мы дожили до утра, благодаря Тебе мы живем, и Ты лишаешь нас жизни, и к Тебе возвращение.'
+            },
+            {
+                arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ',
+                transliteration: 'Аллах1умма инни ас\'алюкаль 1афийата фи ддунья валь ахирати.',
+                translation: 'О Аллах, поистине, я прошу Тебя о благополучии в этом мире и в мире ином.'
+            }
+        ]
+    },
+    dua: {
+        title: '🤲 Дуа',
+        items: [
+            {
+                arabic: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',
+                transliteration: 'Раббана атина фиддунья хьасанatan ва филь ахирати хьасанatan ва къина 1азабан нар.',
+                translation: 'Господь наш! Даруй нам в мире этом добро и в мире ином добро и защити нас от мучений в огне.'
+            },
+            {
+                arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ',
+                transliteration: 'Аллах1умма инни ас\'алюкаль 1афва валь 1афийата фи ддунья валь ахирати.',
+                translation: 'О Аллах, поистине, я прошу Тебя о прощении и благополучии в этом мире и в мире ином.'
+            }
+        ]
+    }
 };
 
 // ========================================
@@ -188,6 +259,7 @@ function showMainMenu() {
     catalogSection.style.display = 'none';
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'none';
+    document.getElementById('adhkarSection').style.display = 'none';
     document.getElementById('pdfViewer').style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -197,6 +269,7 @@ function showCatalog() {
     catalogSection.style.display = 'block';
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'none';
+    document.getElementById('adhkarSection').style.display = 'none';
     document.getElementById('pdfViewer').style.display = 'none';
     renderCatalogCategories();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -207,6 +280,7 @@ function showAudio() {
     catalogSection.style.display = 'none';
     audioSection.style.display = 'block';
     document.getElementById('prophetsSection').style.display = 'none';
+    document.getElementById('adhkarSection').style.display = 'none';
     document.getElementById('pdfViewer').style.display = 'none';
     renderRecitersList();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -217,8 +291,20 @@ function showProphets() {
     catalogSection.style.display = 'none';
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'block';
+    document.getElementById('adhkarSection').style.display = 'none';
     document.getElementById('pdfViewer').style.display = 'none';
     renderProphets('videos');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showAdhkar() {
+    mainMenu.style.display = 'none';
+    catalogSection.style.display = 'none';
+    audioSection.style.display = 'none';
+    document.getElementById('prophetsSection').style.display = 'none';
+    document.getElementById('adhkarSection').style.display = 'block';
+    document.getElementById('pdfViewer').style.display = 'none';
+    renderAdhkar('morning');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -414,6 +500,42 @@ function switchProphetTab(tab, btn) {
 }
 
 // ========================================
+// АЗКАРЫ
+// ========================================
+function renderAdhkar(tab) {
+    const container = document.getElementById('adhkarContent');
+    if (!container) return;
+
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.tab-btn[onclick*="${tab}"]`)?.classList.add('active');
+
+    const data = adhkarData[tab];
+    if (!data) return;
+
+    let html = `
+        <h3 style="font-size: 18px; color: var(--green); margin-bottom: 12px;">${data.title}</h3>
+        <div class="adhkar-list">
+    `;
+
+    data.items.forEach((item) => {
+        html += `
+            <div class="adhkar-card">
+                <div class="adhkar-arabic">${item.arabic}</div>
+                <div class="adhkar-transliteration">${item.transliteration}</div>
+                <div class="adhkar-translation">📖 ${item.translation}</div>
+            </div>
+        `;
+    });
+
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+function switchAdhkarTab(tab, btn) {
+    renderAdhkar(tab);
+}
+
+// ========================================
 // ПРОСМОТР PDF
 // ========================================
 let currentPdfUrl = '';
@@ -498,12 +620,9 @@ function saveUserName() {
         return;
     }
     
-    // Сохраняем в localStorage
     localStorage.setItem('userName', name);
     document.getElementById('nameModal').style.display = 'none';
     showWelcomeToast(name);
-    
-    // Отправляем в Google Sheets
     sendNameToGoogleSheets(name);
 }
 
@@ -511,9 +630,6 @@ function showWelcomeToast(name) {
     showToast(`🌙 Ас-саляму алейкум, ${name}! Мы рады видеть вас на нашем сайте 🤲`);
 }
 
-// ========================================
-// ОТПРАВКА ИМЕНИ В GOOGLE SHEETS
-// ========================================
 function sendNameToGoogleSheets(name) {
     fetch(SCRIPT_URL, {
         method: 'POST',
@@ -521,16 +637,10 @@ function sendNameToGoogleSheets(name) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            name: name
-        })
+        body: JSON.stringify({ name: name })
     })
-    .then(() => {
-        console.log('✅ Имя отправлено в Google Sheets');
-    })
-    .catch(error => {
-        console.log('❌ Ошибка отправки:', error);
-    });
+    .then(() => console.log('✅ Имя отправлено в Google Sheets'))
+    .catch(error => console.log('❌ Ошибка отправки:', error));
 }
 
 // ========================================
@@ -560,6 +670,5 @@ function showToast(msg) {
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
     showMainMenu();
-    // Показываем окно с именем через 0.6 секунды
     setTimeout(showNameModal, 600);
 });
