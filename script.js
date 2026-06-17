@@ -125,11 +125,6 @@ const adhkarData = {
                 arabic: 'اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ',
                 transliteration: 'Аллах1умма бика асбахьна ва бика амсайна ва бика нахьйа ва бика намууту ва иляйка ннушуур.',
                 translation: 'О Аллах, благодаря Тебе мы дожили до утра и благодаря Тебе мы доживем до вечера, благодаря Тебе мы живем, и Ты лишаешь нас жизни, и к Тебе возвращение.'
-            },
-            {
-                arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ',
-                transliteration: 'Аллах1умма инни ас\'алюкаль 1афийата фи ддунья валь ахирати.',
-                translation: 'О Аллах, поистине, я прошу Тебя о благополучии в этом мире и в мире ином.'
             }
         ]
     },
@@ -142,19 +137,9 @@ const adhkarData = {
                 translation: 'Мы дожили до вечера, и этим вечером вся власть принадлежит Аллаху, Господу миров.'
             },
             {
-                arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَ هَذِهِ اللَّيْلَةِ فَتْحَهَا وَنَصْرَهَا وَنُورَهَا وَبَرَكَتَهَا وَهُدَاهَا',
-                transliteration: 'Аллах1умма инни ас\'алюка хайро х1аз\'ихиль лайлати фатхьах1а, ва насрох1а, ва нуурох1а, ва баракатах1а, ва х1удах1а.',
-                translation: 'О Аллах, поистине, я прошу Тебя о благе этой ночи, о помощи и победе, о свете, благодати и прямом руководстве в эту ночь.'
-            },
-            {
                 arabic: 'اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ الْمَصِيرُ',
                 transliteration: 'Аллах1умма бика амсайна ва бика асбахьна ва бика нахьйа ва бика намууту ва иляйкаль масыр.',
                 translation: 'О Аллах, благодаря Тебе мы дожили до вечера и благодаря Тебе мы дожили до утра, благодаря Тебе мы живем, и Ты лишаешь нас жизни, и к Тебе возвращение.'
-            },
-            {
-                arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ',
-                transliteration: 'Аллах1умма инни ас\'алюкаль 1афийата фи ддунья валь ахирати.',
-                translation: 'О Аллах, поистине, я прошу Тебя о благополучии в этом мире и в мире ином.'
             }
         ]
     },
@@ -167,9 +152,9 @@ const adhkarData = {
                 translation: 'Господь наш! Даруй нам в мире этом добро и в мире ином добро и защити нас от мучений в огне.'
             },
             {
-                arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ',
-                transliteration: 'Аллах1умма инни ас\'алюкаль 1афва валь 1афийата фи ддунья валь ахирати.',
-                translation: 'О Аллах, поистине, я прошу Тебя о прощении и благополучии в этом мире и в мире ином.'
+                arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ',
+                transliteration: 'Аллах1умма инни ас\'алюкаль 1афва валь 1афийата.',
+                translation: 'О Аллах, поистине, я прошу Тебя о прощении и благополучии.'
             }
         ]
     }
@@ -312,10 +297,7 @@ function showAdhkar() {
 // КАТАЛОГ КНИГ
 // ========================================
 function renderCatalogCategories() {
-    let html = `
-        <div class="catalog-categories-grid">
-    `;
-    
+    let html = '<div class="catalog-categories-grid">';
     for (const [key, category] of Object.entries(library)) {
         const bookCount = category.books ? category.books.length : 0;
         html += `
@@ -327,7 +309,6 @@ function renderCatalogCategories() {
             </div>
         `;
     }
-    
     html += '</div>';
     catalogContent.innerHTML = html;
 }
@@ -443,13 +424,7 @@ function renderProphets(tab) {
                 html += `
                     <div class="prophet-card">
                         <div class="prophet-video">
-                            <iframe 
-                                src="${video.embed}" 
-                                title="${video.title}" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                            </iframe>
+                            <iframe src="${video.embed}" title="${video.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             <a href="${video.youtube}" target="_blank" class="youtube-link-btn">▶ Смотреть на YouTube</a>
                         </div>
                         <div class="prophet-info">
@@ -547,13 +522,7 @@ function openPdfViewer(pdfUrl) {
     document.getElementById('pdfViewer').style.display = 'block';
     
     const container = document.getElementById('pdfContainer');
-    container.innerHTML = `
-        <iframe src="${pdfUrl}" 
-                width="100%" 
-                height="100%" 
-                style="border: none;">
-        </iframe>
-    `;
+    container.innerHTML = `<iframe src="${pdfUrl}" width="100%" height="100%" style="border: none;"></iframe>`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -634,9 +603,7 @@ function sendNameToGoogleSheets(name) {
     fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name })
     })
     .then(() => console.log('✅ Имя отправлено в Google Sheets'))
