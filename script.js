@@ -237,6 +237,143 @@ const catalogContent = document.getElementById('catalogContent');
 const audioContent = document.getElementById('audioContent');
 
 // ========================================
+// ТЕМНАЯ ТЕМА
+// ========================================
+function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.getElementById('themeBtn');
+    if (html.getAttribute('data-theme') === 'dark') {
+        html.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        btn.textContent = '🌙';
+    } else {
+        html.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        btn.textContent = '☀️';
+    }
+}
+
+function loadTheme() {
+    const theme = localStorage.getItem('theme');
+    const btn = document.getElementById('themeBtn');
+    if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        btn.textContent = '☀️';
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        btn.textContent = '🌙';
+    }
+}
+
+// ========================================
+// ИЗБРАННОЕ
+// ========================================
+function getFavorites() {
+    try {
+        return JSON.parse(localStorage.getItem('favorites') || '[]');
+    } catch { return []; }
+}
+
+function saveFavorites(favorites) {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+
+function toggleFavorite(bookKey) {
+    let favorites = getFavorites();
+    const index = favorites.indexOf(bookKey);
+    if (index > -1) {
+        favorites.splice(index, 1);
+        showToast('❤️ Удалено из избранного');
+    } else {
+        favorites.push(bookKey);
+        showToast('❤️ Добавлено в избранное');
+    }
+    saveFavorites(favorites);
+    // Обновляем отображение
+    const currentSection = document.querySelector('#catalogContent, #favoritesContent, #prophetsContent');
+    if (currentSection) {
+        // Перерисовываем
+        const visibleSection = document.querySelector('#catalogSection:not([style*="display: none"])');
+        if (visibleSection) {
+            // Если мы в каталоге, перерисовываем книги
+            const categoryKey = visibleSection.dataset.category;
+            if (categoryKey) {
+                renderCategoryBooks(categoryKey);
+            } else {
+                renderCatalogCategories();
+            }
+        }
+    }
+}
+
+function isFavorite(bookKey) {
+    return getFavorites().includes(bookKey);
+}
+
+// ========================================
+// ОТЗЫВЫ И ОЦЕНКИ
+// ========================================
+let currentReviewBook = null;
+
+function openReviewModal(bookKey, bookName) {
+    currentReviewBook = bookKey;
+    document.getElementById('reviewBookName').textContent = 'Книга: ' + bookName;
+    document.getElementById('reviewText').value = '';
+    // Сброс звёзд
+    document.querySelectorAll('#reviewModal .stars-display').forEach(el => el.textContent = '☆☆☆☆☆');
+    document.getElementById('reviewModal').style.display = 'flex';
+}
+
+function closeReviewModal() {
+    document.getElementById('reviewModal').style.display = 'none';
+}
+
+function setReviewStar(star) {
+    const stars = document.querySelectorAll('#reviewModal .stars-display span');
+    stars.forEach((s, i) => {
+        s.textContent = i < star ? '★' : '☆';
+    });
+    window._reviewStar = star;
+}
+
+function submitReview() {
+    if (!currentReviewBook) return;
+    const stars = window._reviewStar || 0;
+    const text = document.getElementById('reviewText').value.trim();
+    if (stars === 0) {
+        showToast('⚠️ Поставьте оценку (звёзды)');
+        return;
+    }
+    if (!text) {
+        showToast('⚠️ Напишите текст отзыва');
+        return;
+    }
+    
+    const reviews = JSON.parse(localStorage.getItem('reviews') || '{}');
+    if (!reviews[currentReviewBook]) {
+        reviews[currentReviewBook] = [];
+    }
+    reviews[currentReviewBook].push({
+        stars: stars,
+        text: text,
+        date: new Date().toLocaleString('ru-RU')
+    });
+    localStorage.setItem('reviews', JSON.stringify(reviews));
+    
+    closeReviewModal();
+    showToast('✅ Спасибо за ваш отзыв!');
+}
+
+function getBookReviews(bookKey) {
+    const reviews = JSON.parse(localStorage.getItem('reviews') || '{}');
+    return reviews[bookKey] || [];
+}
+
+function renderStars(rating) {
+    return '★'.repeat(rating) + '☆'.repeat(5 - rating);
+}
+
+// ========================================
 // НАВИГАЦИЯ
 // ========================================
 function showMainMenu() {
@@ -245,6 +382,7 @@ function showMainMenu() {
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'none';
     document.getElementById('adhkarSection').style.display = 'none';
+    document.getElementById('favoritesSection').style.display = 'none';
     document.getElementById('pdfViewer').style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -255,6 +393,7 @@ function showCatalog() {
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'none';
     document.getElementById('adhkarSection').style.display = 'none';
+    document.getElementById('favoritesSection').style.display = 'none';
     document.getElementById('pdfViewer').style.display = 'none';
     renderCatalogCategories();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -266,6 +405,7 @@ function showAudio() {
     audioSection.style.display = 'block';
     document.getElementById('prophetsSection').style.display = 'none';
     document.getElementById('adhkarSection').style.display = 'none';
+    document.getElementById('favoritesSection').style.display = 'none';
     document.getElementById('pdfViewer').style.display = 'none';
     renderRecitersList();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -277,6 +417,7 @@ function showProphets() {
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'block';
     document.getElementById('adhkarSection').style.display = 'none';
+    document.getElementById('favoritesSection').style.display = 'none';
     document.getElementById('pdfViewer').style.display = 'none';
     renderProphets('videos');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -288,8 +429,21 @@ function showAdhkar() {
     audioSection.style.display = 'none';
     document.getElementById('prophetsSection').style.display = 'none';
     document.getElementById('adhkarSection').style.display = 'block';
+    document.getElementById('favoritesSection').style.display = 'none';
     document.getElementById('pdfViewer').style.display = 'none';
     renderAdhkar('morning');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showFavorites() {
+    mainMenu.style.display = 'none';
+    catalogSection.style.display = 'none';
+    audioSection.style.display = 'none';
+    document.getElementById('prophetsSection').style.display = 'none';
+    document.getElementById('adhkarSection').style.display = 'none';
+    document.getElementById('favoritesSection').style.display = 'block';
+    document.getElementById('pdfViewer').style.display = 'none';
+    renderFavorites();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -336,15 +490,28 @@ function renderCategoryBooks(categoryKey) {
         `;
     } else {
         category.books.forEach((book) => {
+            const bookKey = categoryKey + '|' + book.name;
+            const isFav = isFavorite(bookKey);
+            const reviews = getBookReviews(bookKey);
+            const avgRating = reviews.length > 0 ? Math.round(reviews.reduce((s, r) => s + r.stars, 0) / reviews.length) : 0;
+            
             html += `
-                <div class="book-card" style="cursor: pointer;" onclick="openPdfViewer('${book.file}')">
-                    <div>
+                <div class="book-card">
+                    <div class="book-info">
                         <div class="book-name">${book.name}</div>
                         <div class="book-author">${book.author}</div>
-                        <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">${book.desc || ''}</div>
-                        <div style="font-size: 12px; color: var(--gold); margin-top: 4px;">📖 Нажмите, чтобы читать онлайн</div>
+                        <div style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">${book.desc || ''}</div>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px; flex-wrap: wrap;">
+                            ${avgRating > 0 ? `<span class="stars-display">${renderStars(avgRating)} (${reviews.length})</span>` : ''}
+                            <button class="review-btn" onclick="event.stopPropagation(); openReviewModal('${bookKey}', '${book.name}')">📝 Оставить отзыв</button>
+                        </div>
                     </div>
-                    <button class="download-btn" onclick="event.stopPropagation(); downloadBook('${book.file}', '${book.name}')">📥 Скачать</button>
+                    <div class="book-actions">
+                        <button class="fav-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${bookKey}')">
+                            ${isFav ? '❤️' : '🤍'}
+                        </button>
+                        <button class="download-btn" onclick="event.stopPropagation(); downloadBook('${book.file}', '${book.name}')">📥 Скачать</button>
+                    </div>
                 </div>
             `;
         });
@@ -449,15 +616,22 @@ function renderProphets(tab) {
         } else {
             html = '<div class="books-list">';
             prophetsBooks.forEach((book) => {
+                const bookKey = 'prophets|' + book.title;
+                const isFav = isFavorite(bookKey);
                 html += `
                     <div class="book-card" style="cursor: pointer;" onclick="openPdfViewer('${book.file}')">
-                        <div>
+                        <div class="book-info">
                             <div class="book-name">${book.title}</div>
                             <div class="book-author">${book.author}</div>
                             <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">${book.desc}</div>
                             <div style="font-size: 12px; color: var(--gold); margin-top: 4px;">📖 Нажмите, чтобы читать онлайн</div>
                         </div>
-                        <button class="download-btn" onclick="event.stopPropagation(); downloadBook('${book.file}', '${book.title}')">📥 Скачать</button>
+                        <div class="book-actions">
+                            <button class="fav-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${bookKey}')">
+                                ${isFav ? '❤️' : '🤍'}
+                            </button>
+                            <button class="download-btn" onclick="event.stopPropagation(); downloadBook('${book.file}', '${book.title}')">📥 Скачать</button>
+                        </div>
                     </div>
                 `;
             });
@@ -508,6 +682,75 @@ function renderAdhkar(tab) {
 
 function switchAdhkarTab(tab, btn) {
     renderAdhkar(tab);
+}
+
+// ========================================
+// ИЗБРАННОЕ
+// ========================================
+function renderFavorites() {
+    const container = document.getElementById('favoritesContent');
+    const favorites = getFavorites();
+    
+    if (favorites.length === 0) {
+        container.innerHTML = `
+            <div class="favorites-empty">
+                <span class="empty-icon">❤️</span>
+                <p>У вас пока нет избранных книг</p>
+                <p style="font-size: 14px; color: var(--text-muted); margin-top: 4px;">Нажмите ❤️ на книге, чтобы добавить её в избранное</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '<div class="books-list">';
+    
+    // Собираем все книги из всех категорий
+    const allBooks = {};
+    for (const [catKey, catData] of Object.entries(library)) {
+        catData.books.forEach(book => {
+            const key = catKey + '|' + book.name;
+            if (favorites.includes(key)) {
+                allBooks[key] = { ...book, category: catKey };
+            }
+        });
+    }
+    
+    // Также проверяем книги из пророков
+    prophetsBooks.forEach(book => {
+        const key = 'prophets|' + book.title;
+        if (favorites.includes(key)) {
+            allBooks[key] = { ...book, category: 'prophets' };
+        }
+    });
+
+    if (Object.keys(allBooks).length === 0) {
+        container.innerHTML = `
+            <div class="favorites-empty">
+                <span class="empty-icon">📭</span>
+                <p>Избранные книги не найдены</p>
+            </div>
+        `;
+        return;
+    }
+
+    for (const [key, book] of Object.entries(allBooks)) {
+        html += `
+            <div class="book-card" style="cursor: pointer;" onclick="openPdfViewer('${book.file}')">
+                <div class="book-info">
+                    <div class="book-name">${book.name}</div>
+                    <div class="book-author">${book.author}</div>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">${book.desc || ''}</div>
+                </div>
+                <div class="book-actions">
+                    <button class="fav-btn active" onclick="event.stopPropagation(); toggleFavorite('${key}')">❤️</button>
+                    <button class="download-btn" onclick="event.stopPropagation(); downloadBook('${book.file}', '${book.name}')">📥 Скачать</button>
+                </div>
+            </div>
+        `;
+    }
+
+    html += '</div>';
+    container.innerHTML = html;
 }
 
 // ========================================
@@ -636,6 +879,7 @@ function showToast(msg) {
 // ЗАГРУЗКА
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
+    loadTheme();
     showMainMenu();
     setTimeout(showNameModal, 600);
 });
