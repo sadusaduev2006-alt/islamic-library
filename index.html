@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Исламская библиотека</title>
     
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a5a3a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,6 +18,11 @@
 
     <div class="container">
         
+        <!-- ===== ТЕМНАЯ ТЕМА ===== -->
+        <div class="theme-toggle">
+            <button onclick="toggleTheme()" id="themeBtn">🌙</button>
+        </div>
+
         <!-- ===== АРАБСКИЕ ФРАЗЫ ===== -->
         <div class="arabic-top">
             <div class="arabic-line">أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ</div>
@@ -85,16 +96,16 @@
                     <span class="card-desc">Утренние · Вечерние · Дуа</span>
                 </button>
 
+                <button class="main-card" onclick="showFavorites()">
+                    <span class="card-icon">❤️</span>
+                    <span class="card-title">Избранное</span>
+                    <span class="card-desc">Ваши сохранённые книги</span>
+                </button>
+
                 <button class="main-card" onclick="showSection('Сподвижники')">
                     <span class="card-icon">⚔️</span>
                     <span class="card-title">Сподвижники</span>
                     <span class="card-desc">Сахабы (радыАллаху анхум)</span>
-                </button>
-
-                <button class="main-card" onclick="showSection('Видео')">
-                    <span class="card-icon">📹</span>
-                    <span class="card-title">Видео</span>
-                    <span class="card-desc">Уроки · Лекции · Проповеди</span>
                 </button>
             </div>
 
@@ -163,6 +174,15 @@
             <div id="adhkarContent"></div>
         </div>
 
+        <!-- ===== ИЗБРАННОЕ ===== -->
+        <div id="favoritesSection" style="display: none;">
+            <div class="section-top">
+                <button class="back-btn" onclick="showMainMenu()">← На главную</button>
+                <h2 class="section-title">❤️ Избранное</h2>
+            </div>
+            <div id="favoritesContent"></div>
+        </div>
+
         <!-- ===== ПРОСМОТР PDF ===== -->
         <div id="pdfViewer" style="display: none; margin-top: 16px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
@@ -172,18 +192,38 @@
             <div id="pdfContainer" style="width: 100%; height: 600px; border: 1px solid rgba(201, 168, 76, 0.2); border-radius: 12px; overflow: hidden; background: #f5f5f5;"></div>
         </div>
 
-    </div>
-
-    <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ ИМЕНИ ===== -->
-    <div id="nameModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-        <div style="background: #ffffff; padding: 32px 28px; border-radius: 20px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 24px 60px rgba(0,0,0,0.3); border: 1px solid rgba(201, 168, 76, 0.15);">
-            <div style="font-size: 48px; margin-bottom: 8px;">🌙</div>
-            <h3 style="color: #1a5a3a; font-size: 22px; margin-bottom: 6px;">Добро пожаловать!</h3>
-            <p style="color: #4a5a5e; font-size: 15px; margin-bottom: 18px; line-height: 1.5;">Представьтесь, чтобы мы могли обращаться к вам по имени</p>
-            <input type="text" id="userNameInput" placeholder="Введите ваше имя..." style="width: 100%; padding: 14px 16px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; outline: none; font-family: inherit; margin-bottom: 14px; transition: 0.3s; background: #fafafa;">
-            <button onclick="saveUserName()" style="background: #1a5a3a; color: #fff; border: none; padding: 14px 36px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; font-family: inherit; transition: 0.3s; width: 100%;">Сохранить</button>
-            <p style="font-size: 12px; color: #8a9a9e; margin-top: 12px;">📌 Ваше имя будет сохранено один раз</p>
+        <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ ИМЕНИ ===== -->
+        <div id="nameModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+            <div style="background: #ffffff; padding: 32px 28px; border-radius: 20px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 24px 60px rgba(0,0,0,0.3); border: 1px solid rgba(201, 168, 76, 0.15);">
+                <div style="font-size: 48px; margin-bottom: 8px;">🌙</div>
+                <h3 style="color: #1a5a3a; font-size: 22px; margin-bottom: 6px;">Добро пожаловать!</h3>
+                <p style="color: #4a5a5e; font-size: 15px; margin-bottom: 18px; line-height: 1.5;">Представьтесь, чтобы мы могли обращаться к вам по имени</p>
+                <input type="text" id="userNameInput" placeholder="Введите ваше имя..." style="width: 100%; padding: 14px 16px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; outline: none; font-family: inherit; margin-bottom: 14px; transition: 0.3s; background: #fafafa;">
+                <button onclick="saveUserName()" style="background: #1a5a3a; color: #fff; border: none; padding: 14px 36px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; font-family: inherit; transition: 0.3s; width: 100%;">Сохранить</button>
+                <p style="font-size: 12px; color: #8a9a9e; margin-top: 12px;">📌 Ваше имя будет сохранено один раз</p>
+            </div>
         </div>
+
+        <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ ОТЗЫВОВ ===== -->
+        <div id="reviewModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9998; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+            <div style="background: #ffffff; padding: 28px 24px; border-radius: 20px; max-width: 420px; width: 90%; box-shadow: 0 24px 60px rgba(0,0,0,0.3); border: 1px solid rgba(201, 168, 76, 0.15);">
+                <h3 style="color: #1a5a3a; font-size: 20px; margin-bottom: 12px;">📝 Оставить отзыв</h3>
+                <p style="color: #4a5a5e; font-size: 14px; margin-bottom: 14px;" id="reviewBookName">Книга: ...</p>
+                <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 14px; font-size: 32px;">
+                    <span style="cursor: pointer;" onclick="setReviewStar(1)">☆</span>
+                    <span style="cursor: pointer;" onclick="setReviewStar(2)">☆</span>
+                    <span style="cursor: pointer;" onclick="setReviewStar(3)">☆</span>
+                    <span style="cursor: pointer;" onclick="setReviewStar(4)">☆</span>
+                    <span style="cursor: pointer;" onclick="setReviewStar(5)">☆</span>
+                </div>
+                <textarea id="reviewText" placeholder="Напишите ваш отзыв..." style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 14px; outline: none; font-family: inherit; resize: vertical; min-height: 80px; margin-bottom: 14px;"></textarea>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="submitReview()" style="background: #1a5a3a; color: #fff; border: none; padding: 12px 24px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; flex: 1;">Отправить</button>
+                    <button onclick="closeReviewModal()" style="background: #eee; color: #333; border: none; padding: 12px 24px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit;">Отмена</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script src="script.js"></script>
