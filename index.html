@@ -1,212 +1,33 @@
 <!DOCTYPE html>
-<html lang="ru" dir="ltr">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Исламская библиотека</title>
-    
-    <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1a5a3a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Сайт временно недоступен</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #1a5a3a;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+        }
+        h1 { font-size: 28px; }
+        p { font-size: 18px; opacity: 0.8; }
+    </style>
 </head>
 <body>
-
     <div class="container">
-        
-        <!-- ===== ТЕМНАЯ ТЕМА ===== -->
-        <div class="theme-toggle">
-            <button onclick="toggleTheme()" id="themeBtn">🌙</button>
-        </div>
-
-        <!-- ===== АРАБСКИЕ ФРАЗЫ ===== -->
-        <div class="arabic-top">
-            <div class="arabic-line">أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ</div>
-            <div class="arabic-line bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-        </div>
-
-        <!-- ===== ГЛАВНОЕ МЕНЮ ===== -->
-        <div id="mainMenu">
-            
-            <!-- ===== ШАХАДА ===== -->
-            <div class="shahada-block">
-                <div class="shahada-text">
-                    <span class="shahada-arabic">أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ اللَّهِ</span>
-                    <span class="shahada-russian">«Свидетельствую, что нет божества, кроме Аллаха, и что Мухаммад — Посланник Аллаха»</span>
-                </div>
-            </div>
-
-            <!-- ===== ПРИВЕТСТВИЕ ===== -->
-            <div class="greeting">
-                <p class="salam">
-                    Ас-саляму алейкум ва рахматуллахи ва баракатух!
-                    <span class="salam-translate">(Мир вам, милость Аллаха и Его благословения)</span>
-                </p>
-
-                <div class="purpose">
-                    🤲 Этот сайт создан для распространения знаний ради довольства Аллаха. 
-                    Мы стремимся принести пользу (наф’) каждому мусульманину.
-                </div>
-
-                <div class="quotes">
-                    <div class="quote-item">
-                        <span class="q-icon">📖</span>
-                        <span class="q-label">Всевышний сказал:</span>
-                        <span class="q-text">«...Скажи: "Господь мой, приумножь мои знания"»</span>
-                        <span class="q-source">(20:114)</span>
-                    </div>
-                    <div class="quote-item">
-                        <span class="q-icon">📜</span>
-                        <span class="q-label">Пророк (ﷺ) сказал:</span>
-                        <span class="q-text">«Кто встанет на путь знаний, тому Аллах облегчит путь в Рай»</span>
-                        <span class="q-source">(Муслим)</span>
-                    </div>
-                </div>
-
-                <p class="menu-title">📚 Выберите раздел:</p>
-            </div>
-
-            <!-- ===== КНОПКИ ===== -->
-            <div class="main-grid">
-                <button class="main-card" onclick="showCatalog()">
-                    <span class="card-icon">📚</span>
-                    <span class="card-title">Каталог книг</span>
-                    <span class="card-desc">Все книги по темам</span>
-                </button>
-
-                <button class="main-card" onclick="showAudio()">
-                    <span class="card-icon">🎙️</span>
-                    <span class="card-title">Аудио</span>
-                    <span class="card-desc">Чтецы · Лекции · Нашиды</span>
-                </button>
-
-                <button class="main-card" onclick="showProphets()">
-                    <span class="card-icon">🌟</span>
-                    <span class="card-title">Истории пророков</span>
-                    <span class="card-desc">Жизнь посланников Аллаха</span>
-                </button>
-
-                <button class="main-card" onclick="showAdhkar()">
-                    <span class="card-icon">📿</span>
-                    <span class="card-title">Азкары</span>
-                    <span class="card-desc">Утренние · Вечерние · Дуа</span>
-                </button>
-
-                <button class="main-card" onclick="showFavorites()">
-                    <span class="card-icon">❤️</span>
-                    <span class="card-title">Избранное</span>
-                    <span class="card-desc">Ваши сохранённые книги</span>
-                </button>
-
-                <button class="main-card" onclick="showSection('Сподвижники')">
-                    <span class="card-icon">⚔️</span>
-                    <span class="card-title">Сподвижники</span>
-                    <span class="card-desc">Сахабы (радыАллаху анхум)</span>
-                </button>
-            </div>
-
-            <!-- ===== НИЖНЯЯ ЧАСТЬ ===== -->
-            <div class="footer-block">
-                <a href="https://t.me/V_addd" target="_blank" class="telegram-btn">
-                    💬 Написать в Telegram
-                </a>
-                <p class="feedback-text">Нашли ошибку или есть предложение? Напишите нам!</p>
-
-                <div class="dua-block">
-                    <p class="dua">
-                        🤲 Пусть Аллах примет наш труд, простит ошибки и сделает эти знания 
-                        <span class="dua-emphasis">тяжёлыми на весах в Судный день</span>. Амин!
-                    </p>
-                    <p class="dua-arabic">
-                        رَبَّنَا تَقَبَّلْ مِنَّا ۖ إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ
-                        <span class="dua-arabic-source">(2:127)</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== КАТАЛОГ КНИГ ===== -->
-        <div id="catalogSection" style="display: none;">
-            <div class="section-top">
-                <button class="back-btn" onclick="showMainMenu()">← На главную</button>
-                <h2 class="section-title">📚 Каталог книг</h2>
-            </div>
-            <div id="catalogContent"></div>
-        </div>
-
-        <!-- ===== АУДИО ===== -->
-        <div id="audioSection" style="display: none;">
-            <div class="section-top">
-                <button class="back-btn" onclick="showMainMenu()">← На главную</button>
-                <h2 class="section-title">🎙️ Аудио</h2>
-            </div>
-            <div id="audioContent"></div>
-        </div>
-
-        <!-- ===== ИСТОРИИ ПРОРОКОВ ===== -->
-        <div id="prophetsSection" style="display: none;">
-            <div class="section-top">
-                <button class="back-btn" onclick="showMainMenu()">← На главную</button>
-                <h2 class="section-title">🌟 Истории пророков</h2>
-            </div>
-            <div class="tabs">
-                <button class="tab-btn active" onclick="switchProphetTab('videos', this)">📹 Видео</button>
-                <button class="tab-btn" onclick="switchProphetTab('books', this)">📖 Книги</button>
-            </div>
-            <div id="prophetsContent"></div>
-        </div>
-
-        <!-- ===== АЗКАРЫ ===== -->
-        <div id="adhkarSection" style="display: none;">
-            <div class="section-top">
-                <button class="back-btn" onclick="showMainMenu()">← На главную</button>
-                <h2 class="section-title">📿 Азкары</h2>
-            </div>
-            <div class="tabs">
-                <button class="tab-btn active" onclick="switchAdhkarTab('morning', this)">🌅 Утренние</button>
-                <button class="tab-btn" onclick="switchAdhkarTab('evening', this)">🌙 Вечерние</button>
-                <button class="tab-btn" onclick="switchAdhkarTab('dua', this)">🤲 Дуа</button>
-            </div>
-            <div id="adhkarContent"></div>
-        </div>
-
-        <!-- ===== ИЗБРАННОЕ ===== -->
-        <div id="favoritesSection" style="display: none;">
-            <div class="section-top">
-                <button class="back-btn" onclick="showMainMenu()">← На главную</button>
-                <h2 class="section-title">❤️ Избранное</h2>
-            </div>
-            <div id="favoritesContent"></div>
-        </div>
-
-        <!-- ===== ПРОСМОТР PDF ===== -->
-        <div id="pdfViewer" style="display: none; margin-top: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-                <button class="back-btn" onclick="closePdfViewer()">← Назад</button>
-                <button class="download-btn" onclick="downloadCurrentPdf()">📥 Скачать PDF</button>
-            </div>
-            <div id="pdfContainer" style="width: 100%; height: 600px; border: 1px solid rgba(201, 168, 76, 0.2); border-radius: 12px; overflow: hidden; background: #f5f5f5;"></div>
-        </div>
-
-        <!-- ===== МОДАЛЬНОЕ ОКНО ДЛЯ ИМЕНИ ===== -->
-        <div id="nameModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-            <div style="background: #ffffff; padding: 32px 28px; border-radius: 20px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 24px 60px rgba(0,0,0,0.3); border: 1px solid rgba(201, 168, 76, 0.15);">
-                <div style="font-size: 48px; margin-bottom: 8px;">🌙</div>
-                <h3 style="color: #1a5a3a; font-size: 22px; margin-bottom: 6px;">Добро пожаловать!</h3>
-                <p style="color: #4a5a5e; font-size: 15px; margin-bottom: 18px; line-height: 1.5;">Представьтесь, чтобы мы могли обращаться к вам по имени</p>
-                <input type="text" id="userNameInput" placeholder="Введите ваше имя..." style="width: 100%; padding: 14px 16px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; outline: none; font-family: inherit; margin-bottom: 14px; transition: 0.3s; background: #fafafa;">
-                <button onclick="saveUserName()" style="background: #1a5a3a; color: #fff; border: none; padding: 14px 36px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; font-family: inherit; transition: 0.3s; width: 100%;">Сохранить</button>
-                <p style="font-size: 12px; color: #8a9a9e; margin-top: 12px;">📌 Ваше имя будет сохранено один раз</p>
-            </div>
-        </div>
-
+        <h1>🔄 Сайт временно недоступен</h1>
+        <p>Ведутся технические работы. Скоро вернёмся, иншаАллах!</p>
+        <p style="font-size: 14px; opacity: 0.6;">Исламская библиотека</p>
     </div>
-
-    <script src="script.js"></script>
-
 </body>
 </html>
