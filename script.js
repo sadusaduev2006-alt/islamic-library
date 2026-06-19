@@ -407,9 +407,6 @@ function renderCatalogCategories() {
     catalogContent.innerHTML = html;
 }
 
-// ========================================
-// ИСПРАВЛЕННАЯ ФУНКЦИЯ — КНИГИ ОТКРЫВАЮТСЯ СРАЗУ
-// ========================================
 function renderCategoryBooks(categoryKey) {
     const category = library[categoryKey];
     if (!category) return;
@@ -742,7 +739,7 @@ function showSection(name) {
 }
 
 // ========================================
-// ПРИВЕТСТВЕННОЕ ОКНО С ИМЕНЕМ
+// ПРИВЕТСТВЕННОЕ ОКНО С ИМЕНЕМ (ИСПРАВЛЕНО)
 // ========================================
 function showNameModal() {
     const modal = document.getElementById('nameModal');
@@ -752,6 +749,7 @@ function showNameModal() {
         modal.style.display = 'flex';
         document.getElementById('userNameInput').focus();
     } else {
+        modal.style.display = 'none';
         showWelcomeToast(savedName);
     }
 }
@@ -768,6 +766,7 @@ function saveUserName() {
         return;
     }
     
+    // Сохраняем в localStorage
     localStorage.setItem('userName', name);
     document.getElementById('nameModal').style.display = 'none';
     showWelcomeToast(name);
